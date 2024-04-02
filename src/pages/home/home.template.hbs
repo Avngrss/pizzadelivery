@@ -1,0 +1,45 @@
+<div class="container mx-auto px-4">
+  <div
+    class="flex justify-between items-center bg-yellow-300 rounded my-3 px-4"
+  >
+    <div>
+      <img src="/logo.svg" alt="logo" />
+    </div>
+    <div class="flex justify-end py-8">
+      <nav class="flex gap-5">
+        <router-link
+          href="${props.routes.signIn}"
+          class="text-white block bg-orange-400 p-1 rounded-lg hover:scale-110 ease-in duration-300"
+          label="Войти"
+        ></router-link>
+        <router-link
+          href="${props.routes.signUp}"
+          class="text-white block bg-orange-400 p-1 rounded-lg hover:hover:scale-110 ease-in duration-300"
+          label="Зарегистрироваться"
+        ></router-link>
+      </nav>
+    </div>
+  </div>
+  <div class="flex justify-start relative">
+    <img class="absolute" src="/left-man.png" alt="left-man" />
+  </div>
+  <div class="flex justify-end relative">
+    <img class="absolute" src="/right-girl.png" alt="right-girl" />
+  </div>
+  <div class="mt-40">
+    <h1
+      class="mx-auto text-center max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl"
+    >Добро пожаловать в приложение Fib Pasta Bar!</h1>
+    <p
+      class="text-white mx-auto text-center mt-6 max-w-4xl rounded-lg bg-yellow-500 p-1 animate-fade-left animate-once animate-duration-1000 animate-delay-1500 animate-ease-in-out"
+    ><i>У нас самая вкусная пицца!</i></p>
+    <p
+      class="text-white mx-auto text-center mt-6 max-w-4xl rounded-lg bg-orange-400 p-1 animate-fade-right animate-once animate-duration-1000 animate-delay-2000 animate-ease-in-out"
+    ><i>и не только пицца...</i></p>
+  </div>
+  <img
+    class="mx-auto mt-48 animate-fade-up animate-once animate-duration-1000 animate-delay-1000 animate-ease-in-out"
+    src="/big-logo.png"
+    alt="big-logo"
+  />
+</div>

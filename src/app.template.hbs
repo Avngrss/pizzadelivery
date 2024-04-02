@@ -1,0 +1,41 @@
+<header>
+  <app-router>
+    <app-route
+      path="${props.routes.home}"
+      title="Home Page"
+      component="home-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.products}"
+      title="Products"
+      component="products-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.notFound}"
+      title="404 | Not Found"
+      component="not-found"
+    ></app-route>
+    <app-route
+      path="${props.routes.cart}"
+      title="Cart Page"
+      component="cart-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.signIn}"
+      title="Sign In"
+      component="signin-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.signUp}"
+      title="Sign Up"
+      component="signup-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.contacts}"
+      title="Contacts"
+      component="contacts-page"
+    ></app-route>
+    <app-outlet></app-outlet>
+  </app-router>
+</header>
+<ui-toast></ui-toast>
