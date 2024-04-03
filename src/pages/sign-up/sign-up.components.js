@@ -6,6 +6,7 @@ import { authService } from "../../services/Auth";
 import { useToastNotification } from "../../hooks/useToastNotification";
 import { TOAST_TYPE } from "../../constants/toast";
 import { useNavigate } from "../../hooks/useNavigate";
+import { useUserStore } from "../../hooks/useStoreUser";
 
 export class SignUp extends Component {
   constructor() {
@@ -25,24 +26,23 @@ export class SignUp extends Component {
     });
   };
 
-  registerUser = (e) => {
-    e.preventDefault();
-    const formData = extractFormData(e.target);
+  registerUser = (evt) => {
+    evt.preventDefault();
+    const formData = extractFormData(evt.target);
     this.toggleIsLoading();
+    const { setUser } = useUserStore();
     authService
       .signUp(formData.email, formData.password)
-      .then((data) => {
-        console.log(data);
+      .then((user) => {
+        setUser({ ...user });
         useToastNotification({
-          message: "Success!",
+          message: "Success!!!",
           type: TOAST_TYPE.success,
         });
         useNavigate(ROUTES.dashboard);
       })
       .catch((error) => {
-        useToastNotification({
-          message: error.message,
-        });
+        useToastNotification({ message: error.message });
       })
       .finally(() => {
         this.toggleIsLoading();

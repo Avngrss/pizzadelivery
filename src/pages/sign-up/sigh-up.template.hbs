@@ -1,4 +1,6 @@
-<div class="grid grid-cols-12 min-h-screen">
+<div
+  class="grid grid-cols-12 min-h-screen animate-fade-left animate-duration-1000"
+>
   <div class="col-span-3 relative">
     <ui-loader loading="{{isLoading}}" class-name="z-1 bg-white/70"></ui-loader>
     <div class="px-5 mt-10">
@@ -21,10 +23,29 @@
           ></router-link>
         </p>
         <form class="flex flex-col gap-3 sign-in-form mt-12">
-          <ui-input label="Email address" name="email" type="email"></ui-input>
-          <ui-input label="Password" type="password" name="password"></ui-input>
-          <ui-input label="Password" type="password" name="password"></ui-input>
-          <ui-button caption="Sign Up" class-name="block w-full"></ui-button>
+          <ui-input
+            label="Email address"
+            name="email"
+            type="email"
+            class-name="p-1"
+          ></ui-input>
+          <ui-input
+            label="Password"
+            type="password"
+            name="password"
+            class-name="p-1"
+          ></ui-input>
+          <ui-input
+            label="Password"
+            type="password"
+            name="password"
+            class-name="p-1"
+          ></ui-input>
+          <ui-button
+            caption="Sign Up"
+            class-name="block w-full"
+            class-name="p-1"
+          ></ui-button>
         </form>
       </div>
     </div>

@@ -3,25 +3,41 @@ import "../../components/router-link.component";
 import template from "./home.template.hbs";
 import { ROUTES } from "../../constants/routes";
 
+import { useUserStore } from "../../hooks/useStoreUser";
+
 export class HomePage extends Component {
   constructor() {
     super();
     this.template = template({
-      routes: ROUTES,
+      links: [
+        {
+          label: "Войти",
+          href: ROUTES.signIn,
+        },
+        {
+          label: "Зарегистрироваться",
+          href: ROUTES.signUp,
+        },
+      ],
     });
   }
 
-  checkElem = (e) => {
-    if (e.target.matches("input")) {
-      console.log(e.target.value);
+  setLinks = () => {
+    const { getUser } = useUserStore();
+    if (getUser()) {
+      this.setState({
+        links: [
+          {
+            label: "Products",
+            href: ROUTES.products,
+          },
+        ],
+      });
     }
   };
 
   componentDidMount() {
-    this.addEventListener("click", this.checkElem);
-  }
-  componentWillUnmount() {
-    this.removeEventListener("click", this.checkElem);
+    this.setLinks();
   }
 }
 

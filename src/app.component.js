@@ -1,6 +1,7 @@
 import { Component } from "./core/Component";
 import template from "./app.template.hbs";
 import { ROUTES } from "./constants/routes";
+import { useUserStore } from "./hooks/useStoreUser";
 
 import "./core/Router";
 
@@ -17,13 +18,44 @@ import "./components/input/input.component";
 import "./components/button/button.component";
 import "./components/loader/loader.component";
 
+import { authService } from "./services/Auth";
+import { useToastNotification } from "./hooks/useToastNotification";
+
 export class App extends Component {
   constructor() {
     super();
     this.template = template({
       routes: ROUTES,
     });
-    this.state = {};
+    this.state = {
+      isLoading: false,
+    };
+  }
+  toggleIsLoading = () => {
+    this.setState({
+      ...this.state,
+      isLoading: !this.state.isLoading,
+    });
+  };
+
+  initializeApp() {
+    this.toggleIsLoading();
+    const { setUser } = useUserStore();
+    authService
+      .authorizeUser()
+      .then((user) => {
+        setUser({ user: user.uui ? user : null });
+      })
+      .catch((error) => {
+        useToastNotification({ message: error.message });
+      })
+      .finally(() => {
+        this.toggleIsLoading();
+      });
+  }
+
+  componentDidMount() {
+    this.initializeApp();
   }
 }
 
