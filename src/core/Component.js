@@ -24,7 +24,7 @@ export class Component extends HTMLElement {
   }
 
   disconnectedCallback() {
-    componentWillUnmount();
+    this.componentWillUnmount();
   }
 
   componentDidMount() {}
