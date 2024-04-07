@@ -8,13 +8,13 @@ import { useToastNotification } from "./hooks/useToastNotification";
 //Core app
 import "./core/Router";
 //pages
+import "./pages/products/products.component";
 import "./pages/home/home.component";
 import "./pages/not-found/not-found.component";
 import "./pages/cart/cart.component";
 import "./pages/contacts/contacts.component";
 import "./pages/sign-in/sign-in.component";
 import "./pages/sign-up/sign-up.components";
-import "./pages/products/products.component";
 import "./pages/room/room.component";
 //Components
 import "./components/toast/toast.component";

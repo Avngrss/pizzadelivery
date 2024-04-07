@@ -4,7 +4,7 @@ class ApiServes {
   constructor() {
     this.apiInstance = axios.create({
       baseURL:
-        "https://task-manager-api-fb4a0-default-rtdb.europe-west1.firebasedatabase.app",
+        "https://pizza-delivery-api-c5dbf-default-rtdb.europe-west1.firebasedatabase.app",
     });
   }
 
