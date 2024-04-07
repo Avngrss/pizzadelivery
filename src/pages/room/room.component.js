@@ -1,8 +1,8 @@
 import { Component } from "../../core/Component";
-import template from "./products.template.hbs";
+import template from "./room.template.hbs";
 import { ROUTES } from "../../constants/routes";
 
-export class Products extends Component {
+export class Room extends Component {
   constructor() {
     super();
 
@@ -14,4 +14,4 @@ export class Products extends Component {
   }
 }
 
-customElements.define("products-page", Products);
+customElements.define("room-page", Room);

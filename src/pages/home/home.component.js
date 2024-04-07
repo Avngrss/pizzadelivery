@@ -29,7 +29,7 @@ export class HomePage extends Component {
       this.setState({
         links: [
           {
-            label: "Products",
+            label: "Магазин",
             href: ROUTES.products,
           },
         ],

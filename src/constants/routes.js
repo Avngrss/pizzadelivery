@@ -6,4 +6,5 @@ export const ROUTES = {
   signUp: "/sign-up",
   products: "/products",
   notFound: "/404",
+  room: "/room",
 };

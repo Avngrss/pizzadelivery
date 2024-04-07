@@ -2,9 +2,12 @@ import { Component } from "./core/Component";
 import template from "./app.template.hbs";
 import { ROUTES } from "./constants/routes";
 import { useUserStore } from "./hooks/useStoreUser";
+import { authService } from "./services/Auth";
+import { useToastNotification } from "./hooks/useToastNotification";
 
+//Core app
 import "./core/Router";
-
+//pages
 import "./pages/home/home.component";
 import "./pages/not-found/not-found.component";
 import "./pages/cart/cart.component";
@@ -12,16 +15,14 @@ import "./pages/contacts/contacts.component";
 import "./pages/sign-in/sign-in.component";
 import "./pages/sign-up/sign-up.components";
 import "./pages/products/products.component";
-
+import "./pages/room/room.component";
+//Components
 import "./components/toast/toast.component";
 import "./components/input/input.component";
 import "./components/button/button.component";
 import "./components/loader/loader.component";
 import "./components/menu/menu.component";
 import "./components/logo/logo.component";
-
-import { authService } from "./services/Auth";
-import { useToastNotification } from "./hooks/useToastNotification";
 
 export class App extends Component {
   constructor() {
