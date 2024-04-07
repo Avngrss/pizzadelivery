@@ -1,15 +1,88 @@
 import { Component } from "../../core/Component";
-import "../../components/router-link.component";
 import template from "./products.template.hbs";
 import { ROUTES } from "../../constants/routes";
+import { apiServes } from "../../services/Api";
+import { useUserStore } from "../../hooks/useStoreUser";
+import { authService } from "../../services/Auth";
+import { useToastNotification } from "../../hooks/useToastNotification";
+import { useNavigate } from "../../hooks/useNavigate";
+import { TOAST_TYPE } from "../../constants/toast";
+import { store } from "../../store/Store";
 
-export class ProductsPage extends Component {
+export class Products extends Component {
   constructor() {
     super();
-    this.template = template({
-      routes: ROUTES,
+
+    this.template = template();
+
+    this.state = {
+      isLoading: false,
+      user: null,
+      boards: [],
+    };
+  }
+
+  toggleIsLoading = () => {
+    this.setState({
+      ...this.state,
+      isLoading: !this.state.isLoading,
     });
+  };
+
+  openCreateBoardModal() {}
+
+  openDeleteBoardModal() {}
+
+  get() {}
+
+  logout = () => {
+    this.toggleIsLoading();
+    const { setUser } = useUserStore();
+    authService
+      .logOut()
+      .then(() => {
+        setUser(null);
+        useToastNotification({ type: TOAST_TYPE.success, message: "Success!" });
+        useNavigate(ROUTES.signIn);
+      })
+      .catch(({ message }) => {
+        useToastNotification({ message });
+      })
+      .finally(() => {
+        this.toggleIsLoading();
+      });
+  };
+
+  onClick = ({ target }) => {
+    if (target.closest(".create-board")) {
+      this.openCreateBoardModal();
+    }
+
+    if (target.closest(".delete-board")) {
+      this.openDeleteBoardModal();
+    }
+
+    if (target.closest(".logout-btn")) {
+      this.logout();
+    }
+  };
+
+  setUser() {
+    const { getUser } = useUserStore();
+    this.setState({
+      ...this.state,
+      user: getUser(),
+    });
+  }
+
+  componentDidMount() {
+    this.setUser();
+    this.addEventListener("click", this.onClick);
+  }
+
+  componentWillUnmount() {
+    this.removeEventListener("click", this.onClick);
   }
 }
 
-customElements.define("products-page", ProductsPage);
+customElements.define("products-page", Products);

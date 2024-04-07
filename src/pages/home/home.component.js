@@ -8,18 +8,19 @@ import { useUserStore } from "../../hooks/useStoreUser";
 export class HomePage extends Component {
   constructor() {
     super();
-    this.template = template({
+    this.template = template();
+    this.state = {
       links: [
         {
           label: "Войти",
           href: ROUTES.signIn,
         },
         {
-          label: "Зарегистрироваться",
+          label: "Регистрация",
           href: ROUTES.signUp,
         },
       ],
-    });
+    };
   }
 
   setLinks = () => {

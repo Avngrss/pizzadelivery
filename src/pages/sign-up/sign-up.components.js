@@ -33,13 +33,13 @@ export class SignUp extends Component {
     const { setUser } = useUserStore();
     authService
       .signUp(formData.email, formData.password)
-      .then((user) => {
-        setUser({ ...user });
+      .then((data) => {
+        setUser({ ...data.user });
         useToastNotification({
-          message: "Success!!!",
+          message: "Успешный вход",
           type: TOAST_TYPE.success,
         });
-        useNavigate(ROUTES.dashboard);
+        useNavigate(ROUTES.products);
       })
       .catch((error) => {
         useToastNotification({ message: error.message });

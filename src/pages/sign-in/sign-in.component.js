@@ -35,10 +35,10 @@ export class SignIn extends Component {
     this.toggleIsLoading();
     authService
       .signIn(formData.email, formData.password)
-      .then((user) => {
-        setUser({ ...user });
+      .then((data) => {
+        setUser({ ...data.user });
         useToastNotification({
-          message: "Success!!!",
+          message: "Успешный вход",
           type: TOAST_TYPE.success,
         });
         useNavigate(ROUTES.products);
