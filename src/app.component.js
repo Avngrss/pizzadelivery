@@ -23,6 +23,7 @@ import "./components/button/button.component";
 import "./components/loader/loader.component";
 import "./components/menu/menu.component";
 import "./components/logo/logo.component";
+import "./components/footer/footer.component";
 
 export class App extends Component {
   constructor() {

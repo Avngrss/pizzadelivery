@@ -1,6 +1,8 @@
 import { Component } from "../../core/Component";
 import template from "./products.template.hbs";
 import { ROUTES } from "../../constants/routes";
+
+//Swiper-slider
 // import function to register Swiper custom elements
 import { register } from "swiper/element/bundle";
 // register Swiper custom elements
