@@ -1,54 +1,75 @@
-<div
-  class="grid grid-cols-12 min-h-screen animate-fade-left animate-duration-1000"
->
+<div class="container mx-auto px-4 animate-fade-left animate-duration-1000">
   <div class="col-span-3 relative">
     <ui-loader loading="{{isLoading}}" class-name="z-1 bg-white/70"></ui-loader>
+
     <div class="px-5 mt-10">
       <div class="flex items-center gap-2">
-        <i class="icon-arrow-left text-indigo-500"></i>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="orange"
+          stroke="currentColor"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-arrow-left"
+        ><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
         <router-link
-          label="Back to LandingPage"
-          class="text-indigo-500 text-sm"
+          label="Вернуться на главную"
+          class="text-orange-500 text-sm"
           href="${props.routes.home}"
         ></router-link>
       </div>
-      <div class="mt-16">
-        <h1 class="text-2xl">Sign up your account</h1>
-        <p class="text-slate-400 mt-3 text-sm">
-          Already have an account?
-          <router-link
-            label="Sign In"
-            class="text-indigo-500"
-            href="${props.routes.signIn}"
-          ></router-link>
-        </p>
-        <form class="flex flex-col gap-3 sign-in-form mt-12">
+    </div>
+    <div class="mt-24">
+      <div class="flex justify-start relative">
+        <img class="absolute" src="/left-man.png" alt="left-man" />
+      </div>
+      <div class="flex justify-end relative">
+        <img class="absolute" src="/right-girl.png" alt="right-girl" />
+      </div>
+      <div class="flex items-center justify-center">
+        <div
+          class="mt-16 border-orange-400 border-2 p-9 h-2/5 w-2/4 rounded-lg m-0"
+        >
+          <h1 class="text-2xl">Регистрация аккаунта</h1>
+          <p class="text-slate-400 mt-3 text-sm">
+            Уже есть аккаунт?
+            <router-link
+              label="Войти"
+              class="text-orange-500"
+              href="${props.routes.signIn}"
+            ></router-link>
+          <form class="flex flex-col gap-3 sign-in-form mt-12">
           <ui-input
-            label="Email address"
+            label="Ваш email"
             name="email"
             type="email"
             class-name="p-1"
           ></ui-input>
           <ui-input
-            label="Password"
+            label="Пароль"
             type="password"
             name="password"
             class-name="p-1"
           ></ui-input>
           <ui-input
-            label="Password"
+            label="Подтвердить пароль"
             type="password"
             name="password"
             class-name="p-1"
           ></ui-input>
           <ui-button
-            caption="Sign Up"
+            caption="Зарегистрироваться"
             class-name="block w-full"
             class-name="p-1"
           ></ui-button>
         </form>
+        </div>
       </div>
     </div>
+
   </div>
-  <div class="col-span-9 bg-workspace bg-cover"></div>
 </div>

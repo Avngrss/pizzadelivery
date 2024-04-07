@@ -17,6 +17,8 @@ import "./components/toast/toast.component";
 import "./components/input/input.component";
 import "./components/button/button.component";
 import "./components/loader/loader.component";
+import "./components/menu/menu.component";
+import "./components/logo/logo.component";
 
 import { authService } from "./services/Auth";
 import { useToastNotification } from "./hooks/useToastNotification";

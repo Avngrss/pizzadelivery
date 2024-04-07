@@ -1,47 +1,40 @@
 <ui-loader loading="{{isLoading}}" class-name="z-1 bg-white/70"></ui-loader>
 <div class="relative">
-  <app-router class="animate-fade-left animate-duration-3000">
+  <app-router>
     <app-route
       path="${props.routes.home}"
       title="Главная"
       component="home-page"
-      class="animate-fade-left animate-duration-3000"
     ></app-route>
     <app-route
       path="${props.routes.signIn}"
       title="Вход в аккаунт"
       component="signin-page"
-      class="animate-fade-left animate-duration-1000"
     ></app-route>
     <app-route
       path="${props.routes.signUp}"
       title="Регистрация"
       component="signup-page"
-      class="animate-fade-left animate-duration-1000"
     ></app-route>
     <app-route
       path="${props.routes.products}"
       title="Магазин"
       component="products-page"
-      class="animate-fade-left animate-duration-3000"
     ></app-route>
     <app-route
       path="${props.routes.contacts}"
       title="Контакты"
       component="contacts-page"
-      class="animate-fade-left animate-duration-3000"
     ></app-route>
     <app-route
       path="${props.routes.cart}"
       title="Корзина"
       component="cart-page"
-      class="animate-fade-left animate-duration-3000"
     ></app-route>
     <app-route
       path="${props.routes.notFound}"
       title="404 | Not Found"
       component="not-found"
-      class="animate-fade-left animate-duration-3000"
     ></app-route>
     <app-outlet></app-outlet>
   </app-router>

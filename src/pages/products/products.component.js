@@ -13,12 +13,13 @@ export class Products extends Component {
   constructor() {
     super();
 
-    this.template = template();
+    this.template = template({
+      routes: ROUTES,
+    });
 
     this.state = {
       isLoading: false,
       user: null,
-      boards: [],
     };
   }
 
@@ -29,12 +30,6 @@ export class Products extends Component {
     });
   };
 
-  openCreateBoardModal() {}
-
-  openDeleteBoardModal() {}
-
-  get() {}
-
   logout = () => {
     this.toggleIsLoading();
     const { setUser } = useUserStore();
@@ -42,8 +37,11 @@ export class Products extends Component {
       .logOut()
       .then(() => {
         setUser(null);
-        useToastNotification({ type: TOAST_TYPE.success, message: "Success!" });
-        useNavigate(ROUTES.signIn);
+        useToastNotification({
+          type: TOAST_TYPE.success,
+          message: "Вы вышли из системы!",
+        });
+        useNavigate(ROUTES.home);
       })
       .catch(({ message }) => {
         useToastNotification({ message });
@@ -54,14 +52,6 @@ export class Products extends Component {
   };
 
   onClick = ({ target }) => {
-    if (target.closest(".create-board")) {
-      this.openCreateBoardModal();
-    }
-
-    if (target.closest(".delete-board")) {
-      this.openDeleteBoardModal();
-    }
-
     if (target.closest(".logout-btn")) {
       this.logout();
     }
