@@ -9,7 +9,7 @@ export class Button extends Component {
     this.state = {
       caption: this.getAttribute("caption") ?? "",
       className: this.getAttribute("class-name"),
-      count: 0,
+      count: this.getAttribute("count"),
     };
   }
 }

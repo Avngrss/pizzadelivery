@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
   font-family: "Asul", serif;
   font-weight: 400;

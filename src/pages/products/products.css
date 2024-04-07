@@ -1,0 +1,29 @@
+swiper-container::part(bullet-active) {
+  background-color: red;
+}
+swiper-container::part(button-prev) {
+  color: black;
+  border-radius: 50%;
+  padding: 10px;
+  background-color: rgba(235, 235, 88, 0.7);
+  width: 20px;
+  height: 20px;
+}
+swiper-container::part(button-next) {
+  color: black;
+  border-radius: 50%;
+  padding: 10px;
+  background-color: rgba(235, 235, 88, 0.7);
+  width: 20px;
+  height: 20px;
+}
+swiper-container::part(container) {
+  width: 1500px;
+  height: 400px;
+}
+
+.slider-img {
+  border-radius: 30px;
+  width: 100%;
+  height: 100%;
+}

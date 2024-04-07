@@ -7,6 +7,8 @@ import { useToastNotification } from "../../hooks/useToastNotification";
 import { useNavigate } from "../../hooks/useNavigate";
 import { TOAST_TYPE } from "../../constants/toast";
 
+import "../../../style.css";
+
 export class Menu extends Component {
   constructor() {
     super();
@@ -49,6 +51,13 @@ export class Menu extends Component {
       });
   };
 
+  linkEmail = (e) => {
+    const target = e.target;
+    if (target.matches(".email")) {
+      e.preventDefault();
+    }
+  };
+
   onClick = ({ target }) => {
     if (target.closest(".logout-btn")) {
       this.logout();
@@ -65,10 +74,12 @@ export class Menu extends Component {
 
   componentDidMount() {
     this.setUser();
+    this.addEventListener("click", this.linkEmail);
     this.addEventListener("click", this.onClick);
   }
 
   componentWillUnmount() {
+    this.removeEventListener("click", this.linkEmail);
     this.removeEventListener("click", this.onClick);
   }
 }
