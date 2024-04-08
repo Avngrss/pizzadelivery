@@ -29,16 +29,13 @@ export class Products extends Component {
   // renderProducts = () => {
   //   apiServes.get("/products").then(({ data }) =>
   //     this.setState({
-  //       products: mapResponseApiData(data).map((item) => {
+  //       products: mapResponseApiData(data).forEach((item) => {
   //         const wrap = this.querySelector(".products");
-  //         let newProduct = document.createElement("div");
-  //         newProduct.innerHTML = `
+  //         const newProduct = `
   //             <div>${item.title}</div>
   //             <div>${item.price}</div>
   //             <div>${item.description}</div>`;
-  //         wrap.append(newProduct);
-  //         console.log(item);
-  //         console.log(wrap);
+  //         wrap.insertAdjacentHTML("beforeend", newProduct);
   //       }),
   //     })
   //   );
@@ -46,7 +43,9 @@ export class Products extends Component {
 
   renderProducts2 = () => {
     apiServes.get("/products").then(({ data }) => {
-      console.log(mapResponseApiData(data));
+      this.setState({
+        products: console.log(mapResponseApiData(data)),
+      });
     });
   };
 
