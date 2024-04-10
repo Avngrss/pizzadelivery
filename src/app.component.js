@@ -24,6 +24,8 @@ import "./components/loader/loader.component";
 import "./components/menu/menu.component";
 import "./components/logo/logo.component";
 import "./components/footer/footer.component";
+import "./components/modal/modal.component";
+import "./components/call-form/call-form.component";
 
 export class App extends Component {
   constructor() {

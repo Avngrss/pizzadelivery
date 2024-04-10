@@ -43,8 +43,8 @@ export class SignIn extends Component {
         });
         useNavigate(ROUTES.products);
       })
-      .catch((error) => {
-        useToastNotification({ message: error.message });
+      .catch(() => {
+        useToastNotification({ message: "Неправильный логин или пароль" });
       })
       .finally(() => {
         this.toggleIsLoading();

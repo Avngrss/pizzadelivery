@@ -5,6 +5,8 @@ import { useUserStore } from "../../hooks/useStoreUser";
 import { authService } from "../../services/Auth";
 import { useToastNotification } from "../../hooks/useToastNotification";
 import { useNavigate } from "../../hooks/useNavigate";
+import { useModal } from "../../hooks/useModal";
+import { extractFormData } from "../../utils/extractFormData";
 import { TOAST_TYPE } from "../../constants/toast";
 
 import "../../../style.css";
@@ -16,8 +18,9 @@ export class Menu extends Component {
     this.template = template({
       routes: ROUTES,
     });
-
+    this.timerID = null;
     this.state = {
+      isOpen: false,
       isLoading: false,
       user: null,
     };
@@ -51,6 +54,29 @@ export class Menu extends Component {
       });
   };
 
+  openCallModal() {
+    document.body.style.overflow = "hidden";
+    useModal({
+      isOpen: true,
+      template: "ui-call-form",
+      onSuccess: (modal) => {
+        const form = modal.querySelector(".create-board-form");
+        const formData = extractFormData(form);
+        console.log(formData);
+        useToastNotification({
+          message: "Ваше сообщение получено. В скором времени с вами свяжутся",
+          type: TOAST_TYPE.success,
+        });
+      },
+    });
+  }
+
+  onClick = ({ target }) => {
+    if (target.closest(".order-call")) {
+      this.openCallModal();
+    }
+  };
+
   linkEmail = (e) => {
     const target = e.target;
     if (target.matches(".email")) {
@@ -58,7 +84,7 @@ export class Menu extends Component {
     }
   };
 
-  onClick = ({ target }) => {
+  logoutBtn = ({ target }) => {
     if (target.closest(".logout-btn")) {
       this.logout();
     }
@@ -73,14 +99,18 @@ export class Menu extends Component {
   }
 
   componentDidMount() {
+    // this.timerID = setTimeout(this.openCallModal, 3000);
     this.setUser();
     this.addEventListener("click", this.linkEmail);
+    this.addEventListener("click", this.logoutBtn);
     this.addEventListener("click", this.onClick);
   }
 
   componentWillUnmount() {
     this.removeEventListener("click", this.linkEmail);
+    this.removeEventListener("click", this.logoutBtn);
     this.removeEventListener("click", this.onClick);
+    clearTimeout(this.timerID);
   }
 }
 

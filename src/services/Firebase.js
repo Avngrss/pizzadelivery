@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 export class Firebase {
   constructor() {
     this._app = initializeApp({
-      apiKey: import.meta.env.VITE_API_KEY, //AIzaSyARWlYwCmDlYghWVzON9xxgE_2uvl93mp0
+      apiKey: import.meta.env.VITE_API_KEY,
       authDomain: "pizza-delivery-api-c5dbf.firebaseapp.com",
       projectId: "pizza-delivery-api-c5dbf",
       storageBucket: "pizza-delivery-api-c5dbf.appspot.com",

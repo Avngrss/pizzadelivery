@@ -7,45 +7,61 @@
     <div>
       <ui-menu></ui-menu>
     </div>
-    <div class="animate-fade-left animate-duration-1000 mt-6">
-      <swiper-container
-        class="mt-4"
-        navigation="true"
-        keyboard="true"
-        mousewheel="true"
-        css-mode="true"
-        space-between="10"
-        slides-per-view="2"
-        loop="'true"
-        autoplay-delay="3000"
-        autoplay-disable-on-interaction="false"
-      >
-        <swiper-slide><img
-            class="slider-img"
-            src="/pizza1.jpg"
-            alt=""
-          /></swiper-slide>
-        <swiper-slide><img
-            class="slider-img"
-            src="/1.jpg"
-            alt=""
-          /></swiper-slide>
-        <swiper-slide><img
-            class="slider-img"
-            src="/images.jpg"
-            alt=""
-          /></swiper-slide>
-        <swiper-slide><img
-            class="slider-img"
-            src="/pizzaman.jpg"
-            alt=""
-          /></swiper-slide>
-      </swiper-container>
-    </div>
-    <div class="mt-8">
-      <h2 class="text-yellow-500 text-5xl">Пицца</h2>
-      <div class="products">
-        {{! <button class="create">create</button> }}
+    <div class="animate-fade-left animate-duration-1000">
+      <div class="mt-6">
+        <swiper-container
+          class="mt-4"
+          navigation="true"
+          keyboard="true"
+          mousewheel="true"
+          css-mode="true"
+          space-between="10"
+          slides-per-view="2"
+          loop="'true"
+          autoplay-delay="3000"
+          autoplay-disable-on-interaction="false"
+        >
+          <swiper-slide><img
+              class="slider-img"
+              src="/pizza1.jpg"
+              alt=""
+            /></swiper-slide>
+          <swiper-slide><img
+              class="slider-img"
+              src="/1.jpg"
+              alt=""
+            /></swiper-slide>
+          <swiper-slide><img
+              class="slider-img"
+              src="/images.jpg"
+              alt=""
+            /></swiper-slide>
+          <swiper-slide><img
+              class="slider-img"
+              src="/pizzaman.jpg"
+              alt=""
+            /></swiper-slide>
+        </swiper-container>
+      </div>
+      <div class="mt-8">
+        <h2 class="text-yellow-500 text-5xl">Пицца</h2>
+        <div class="products grid grid-cols-4 gap-6">
+          {{#each products}}
+            <div class="border-2 border-gray-300 rounded-lg p-3">
+              <img src="{{this.img}}" alt="pizza" />
+              <h3 class="text-gray-500 font-bold text-xl">{{this.name}}</h3>
+              <p class="text-sm text-gray-400"></p>
+              <div class="flex items-center justify-between">
+                <span class="text-xl font-semibold">от {{this.price}}</span>
+                <ui-button
+                  caption="Добавить в корзину"
+                  class-name="bg-yellow-400 text-lg text-white hover:text-gray-600"
+                ></ui-button>
+              </div>
+            </div>
+          {{/each}}
+          {{! <button class="create">create</button> }}
+        </div>
       </div>
     </div>
   </main>
