@@ -3,6 +3,7 @@ import template from "./products.template.hbs";
 import { ROUTES } from "../../constants/routes";
 import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
+import { useModal } from "../../hooks/useModal";
 
 import { DATA } from "./products";
 
@@ -34,6 +35,17 @@ export class Products extends Component {
       });
     }
   };
+
+  openSuggestModal() {
+    useModal({
+      isOpen: true,
+      template: "ui-suggest-modal",
+      title: "Новинка!",
+      successCaption: "Спешу попробовать!",
+      className: "min-w-80",
+      onSuccess() {},
+    });
+  }
 
   getProducts = () => {
     apiServes.get("/pizza").then(({ data }) => {
@@ -83,10 +95,11 @@ export class Products extends Component {
     const searchValue = e.target.value.toUpperCase();
     const items = this.querySelectorAll(".pizza");
     const titles = this.querySelectorAll(".title");
+    const products = this.querySelector(".products");
 
     for (let i = 0; i < titles.length; i++) {
       if (titles[i].innerHTML.toUpperCase().indexOf(searchValue) >= 0) {
-        items[i].style.display = "";
+        items[i].style.display = "block";
       } else {
         items[i].style.display = "none";
       }
@@ -95,16 +108,18 @@ export class Products extends Component {
 
   componentDidMount() {
     // this.addEventListener("click", this.onClick);
+    this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
-    this.addEventListener("input", this.liveSearch);
+    this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
   }
 
   componentWillUnmount() {
     // this.addEventListener("click", this.onClick);
     this.addEventListener("click", this.filterProducts);
-    this.addEventListener("input", this.liveSearch);
+    this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
+    clearTimeout(this.timerID);
   }
 }
 

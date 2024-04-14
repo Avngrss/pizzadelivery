@@ -1,8 +1,10 @@
 export const initialState = {
   isOpen: false,
-  successCaption: "Отправить",
-  rejectCaption: "Отменить",
-  title: "Заказать звонок",
+  showBtn: false,
+  successCaption: "",
+  rejectCaption: "",
+  title: "",
   template: null,
   onSuccess: null,
+  className: "",
 };

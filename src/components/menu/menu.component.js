@@ -18,7 +18,7 @@ export class Menu extends Component {
     this.template = template({
       routes: ROUTES,
     });
-    this.timerID = null;
+
     this.state = {
       isOpen: false,
       isLoading: false,
@@ -57,9 +57,13 @@ export class Menu extends Component {
   openCallModal() {
     useModal({
       isOpen: true,
+      showBtn: true,
       template: "ui-call-form",
+      successCaption: "Отправить",
+      rejectCaption: "Отменить",
+      title: "Заказать звонок",
       onSuccess: (modal) => {
-        const form = modal.querySelector(".create-board-form");
+        const form = modal.querySelector(".call-form ");
         const formData = extractFormData(form);
         console.log(formData);
         useToastNotification({
@@ -98,7 +102,6 @@ export class Menu extends Component {
   }
 
   componentDidMount() {
-    // this.timerID = setTimeout(this.openCallModal, 3000);
     this.setUser();
     this.addEventListener("click", this.linkEmail);
     this.addEventListener("click", this.logoutBtn);
@@ -109,7 +112,6 @@ export class Menu extends Component {
     this.removeEventListener("click", this.linkEmail);
     this.removeEventListener("click", this.logoutBtn);
     this.removeEventListener("click", this.onClick);
-    clearTimeout(this.timerID);
   }
 }
 

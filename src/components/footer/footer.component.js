@@ -18,9 +18,13 @@ export class Footer extends Component {
   openCallModal() {
     useModal({
       isOpen: true,
+      showBtn: true,
       template: "ui-call-form",
+      successCaption: "Отправить",
+      rejectCaption: "Отменить",
+      title: "Заказать звонок",
       onSuccess: (modal) => {
-        const form = modal.querySelector(".create-board-form");
+        const form = modal.querySelector(".call-form ");
         const formData = extractFormData(form);
         console.log(formData);
         useToastNotification({
