@@ -44,18 +44,53 @@
         </swiper-container>
       </div>
       <div class="mt-8">
-        <h2 class="text-yellow-500 text-5xl">Пицца</h2>
-        <div class="products grid grid-cols-4 gap-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-yellow-500 text-5xl mb-3">Пицца</h2>
+          <div class="flex items-center gap-5">
+            <ui-input
+              placeholder="Искать пиццу"
+              class-name="p-3 w-full"
+              class="search-input"
+            ></ui-input>
+            <ui-button
+              class="all active"
+              caption="Все"
+              class-name="text-white"
+            ></ui-button>
+            <ui-button
+              class="meat"
+              caption="Мясная"
+              class-name="text-white"
+            ></ui-button>
+            <ui-button
+              class="barbecue"
+              caption="Барбекю"
+              class-name="text-white"
+            ></ui-button>
+            <ui-button
+              class="another"
+              caption="Другие"
+              class-name="text-white"
+            ></ui-button>
+
+          </div>
+        </div>
+        <div class="products grid grid-cols-4 gap-6 mt-8">
           {{#each products}}
-            <div class="border-2 border-gray-300 rounded-lg p-3">
+            <div
+              class="border-2 border-gray-300 rounded-lg p-3 pizza animate-fade-up animate-once animate-duration-1000 animate-delay-300 animate-ease-in-out
+                {{this.className}}"
+            >
               <img src="{{this.img}}" alt="pizza" />
-              <h3 class="text-gray-500 font-bold text-xl">{{this.name}}</h3>
-              <p class="text-sm text-gray-400"></p>
+              <h3
+                class="text-gray-500 font-bold text-xl title"
+              >{{this.title}}</h3>
+              <p class="text-sm text-gray-400 mt-3">{{this.description}}</p>
               <div class="flex items-center justify-between">
-                <span class="text-xl font-semibold">от {{this.price}}</span>
+                <span class="text-xl font-semibold">от {{this.price}} ₽</span>
                 <ui-button
                   caption="Добавить в корзину"
-                  class-name="bg-yellow-400 text-lg text-white hover:text-gray-600"
+                  class-name="bg-yellow-400 text-lg text-white mt-3 hover:text-gray-600"
                 ></ui-button>
               </div>
             </div>

@@ -55,7 +55,6 @@ export class Menu extends Component {
   };
 
   openCallModal() {
-    document.body.style.overflow = "hidden";
     useModal({
       isOpen: true,
       template: "ui-call-form",
