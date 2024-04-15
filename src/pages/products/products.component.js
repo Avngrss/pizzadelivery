@@ -28,14 +28,6 @@ export class Products extends Component {
     };
   }
 
-  onClick = (e) => {
-    if (e.target.closest(".create")) {
-      DATA.forEach((item) => {
-        apiServes.post("/pizza", item);
-      });
-    }
-  };
-
   openSuggestModal() {
     useModal({
       isOpen: true,
@@ -48,7 +40,7 @@ export class Products extends Component {
   }
 
   getProducts = () => {
-    apiServes.get("/pizza").then(({ data }) => {
+    apiServes.get("/products").then(({ data }) => {
       this.setState({
         products: mapResponseApiData(data),
       });
@@ -56,33 +48,37 @@ export class Products extends Component {
   };
 
   filterProducts = (e) => {
-    const meats = this.querySelectorAll(".pizza");
-    if (e.target.closest(".all")) {
+    const meats = this.querySelectorAll(".items");
+    if (e.target.closest(".pizza-block")) {
       meats.forEach((item) => {
-        item.style.display = "block";
-      });
-    }
-    if (e.target.closest(".meat")) {
-      meats.forEach((item) => {
-        if (!item.classList.contains("meat")) {
+        if (!item.classList.contains("pizza")) {
           item.style.display = "none";
         } else {
           item.style.display = "block";
         }
       });
     }
-    if (e.target.closest(".barbecue")) {
+    if (e.target.closest(".drinks")) {
       meats.forEach((item) => {
-        if (!item.classList.contains("barbecue")) {
+        if (!item.classList.contains("drink")) {
           item.style.display = "none";
         } else {
           item.style.display = "block";
         }
       });
     }
-    if (e.target.closest(".another")) {
+    if (e.target.closest(".desserts")) {
       meats.forEach((item) => {
-        if (!item.classList.contains("another")) {
+        if (!item.classList.contains("dessert")) {
+          item.style.display = "none";
+        } else {
+          item.style.display = "block";
+        }
+      });
+    }
+    if (e.target.closest(".snacks")) {
+      meats.forEach((item) => {
+        if (!item.classList.contains("snack")) {
           item.style.display = "none";
         } else {
           item.style.display = "block";
@@ -93,7 +89,7 @@ export class Products extends Component {
 
   liveSearch = (e) => {
     const searchValue = e.target.value.toUpperCase();
-    const items = this.querySelectorAll(".pizza");
+    const items = this.querySelectorAll(".items");
     const titles = this.querySelectorAll(".title");
     const products = this.querySelector(".products");
 
@@ -107,7 +103,6 @@ export class Products extends Component {
   };
 
   componentDidMount() {
-    // this.addEventListener("click", this.onClick);
     this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
@@ -115,7 +110,6 @@ export class Products extends Component {
   }
 
   componentWillUnmount() {
-    // this.addEventListener("click", this.onClick);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();

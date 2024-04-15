@@ -45,14 +45,47 @@
       </div>
       <div class="mt-8">
         <div class="flex items-center justify-between">
-          <h2 class="text-yellow-500 text-5xl mb-3">Пицца</h2>
           <div class="flex items-center gap-5">
-            <ui-input
-              placeholder="Искать пиццу"
-              class-name="p-3 w-full rounded-full focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-              class="search-input w-96"
-            ></ui-input>
-            <ui-button
+            <div class="flex justify-between items-center gap-6">
+              <div
+                class="flex flex-col items-center cursor-pointer hover:scale-110 ease-in duration-300 pizza-block"
+              >
+                <img src="/public/pizzabtn.svg" alt="pizza" />
+                <span>Пицца</span>
+              </div>
+              <div
+                class="flex flex-col items-center cursor-pointer hover:scale-110 ease-in duration-300 drinks"
+              >
+                <img
+                  src="/public/drinks.svg"
+                  alt="drinks"
+                  style="width: 74px; height: 54px;"
+                />
+                <span>Напитки</span>
+              </div>
+              <div
+                class="flex flex-col items-center cursor-pointer hover:scale-110 ease-in duration-300 desserts"
+              >
+                <img
+                  src="/public/dessert.svg"
+                  alt="dessert"
+                  style="width: 74px; height: 54px;"
+                />
+                <span>Десерты</span>
+              </div>
+              <div
+                class="flex flex-col items-center cursor-pointer hover:scale-110 ease-in duration-300 snacks"
+              >
+                <img
+                  src="/public/snack.svg"
+                  alt="snack"
+                  style="width: 74px; height: 54px;"
+                />
+                <span>Закуски</span>
+              </div>
+            </div>
+
+            {{! <ui-button
               class="all active"
               caption="Все"
               class-name="text-white"
@@ -71,14 +104,19 @@
               class="another"
               caption="Другие"
               class-name="text-white"
-            ></ui-button>
-
+            ></ui-button> }}
           </div>
+          <ui-input
+            placeholder="Искать что-нибудь вкусное"
+            class-name="p-3 w-full rounded-full focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            class="search-input w-96"
+          ></ui-input>
         </div>
-        <div class="products grid grid-cols-4 gap-6 mt-8">
+
+        <div class="products grid grid-cols-4 gap-8 mt-8">
           {{#each products}}
             <div
-              class="border-2 border-gray-300 rounded-lg p-3 pizza animate-fade-up animate-once animate-duration-1000 animate-delay-300 animate-ease-in-out
+              class="border-2 border-gray-300 rounded-lg p-3 items hover:scale-110 ease-in duration-300
                 {{this.className}}"
             >
               <img src="{{this.img}}" alt="pizza" />
@@ -95,7 +133,6 @@
               </div>
             </div>
           {{/each}}
-          {{! <button class="create">create</button> }}
         </div>
       </div>
     </div>
