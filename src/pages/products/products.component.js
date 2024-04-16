@@ -4,8 +4,7 @@ import { ROUTES } from "../../constants/routes";
 import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 import { useModal } from "../../hooks/useModal";
-
-import { DATA } from "./products";
+import { useToastNotification } from "../../hooks/useToastNotification";
 
 //Swiper-slider
 // import function to register Swiper custom elements
@@ -23,6 +22,7 @@ export class Products extends Component {
     });
     this.timerID = null;
     this.state = {
+      error: "",
       products: [],
       isOpen: false,
       isLoading: false,
@@ -57,6 +57,9 @@ export class Products extends Component {
       .catch(() => {
         useToastNotification({ message: "Сервер не доступен" });
       });
+    // .finally(() => {
+    //   this.toggleIsLoading();
+    // });
   };
 
   filterProducts = (e) => {
