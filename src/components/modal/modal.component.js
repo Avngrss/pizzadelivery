@@ -1,5 +1,4 @@
 import { Component } from "../../core/Component";
-import { ROUTES } from "../../constants/routes";
 import template from "./modal.template.hbs";
 import { eventEmitter } from "../../core/EventEmitter";
 import { EVENT_TYPES } from "../../constants/eventTypes";
@@ -8,9 +7,7 @@ import { initialState } from "./initialState";
 export class Modal extends Component {
   constructor() {
     super();
-    this.template = template({
-      routes: ROUTES,
-    });
+    this.template = template({});
 
     this.state = initialState;
   }
@@ -33,7 +30,6 @@ export class Modal extends Component {
 
   closeModal = () => {
     this.setState(initialState);
-    document.body.style.overflow = "visible";
   };
 
   onSuccess = () => {

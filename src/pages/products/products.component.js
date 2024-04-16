@@ -25,6 +25,7 @@ export class Products extends Component {
     this.state = {
       products: [],
       isOpen: false,
+      isLoading: false,
     };
   }
 
@@ -38,13 +39,24 @@ export class Products extends Component {
       onSuccess() {},
     });
   }
-
-  getProducts = () => {
-    apiServes.get("/products").then(({ data }) => {
-      this.setState({
-        products: mapResponseApiData(data),
-      });
+  toggleIsLoading = () => {
+    this.setState({
+      ...this.state,
+      isLoading: !this.state.isLoading,
     });
+  };
+  getProducts = () => {
+    this.toggleIsLoading();
+    apiServes
+      .get("/products")
+      .then(({ data }) => {
+        this.setState({
+          products: mapResponseApiData(data),
+        });
+      })
+      .catch(() => {
+        useToastNotification({ message: "Сервер не доступен" });
+      });
   };
 
   filterProducts = (e) => {
@@ -103,7 +115,7 @@ export class Products extends Component {
   };
 
   componentDidMount() {
-    this.timerID = setTimeout(this.openSuggestModal, 3000);
+    // this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();

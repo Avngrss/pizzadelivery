@@ -28,6 +28,7 @@ export class SignIn extends Component {
       isLoading: !this.state.isLoading,
     });
   };
+
   signInUser = (evt) => {
     evt.preventDefault();
     const { setUser } = useUserStore();
@@ -50,11 +51,34 @@ export class SignIn extends Component {
         this.toggleIsLoading();
       });
   };
+
+  signInGoogle = (evt) => {
+    evt.preventDefault();
+    this.toggleIsLoading();
+    authService
+      .signInWitchGoogle()
+      .then(() => {
+        useToastNotification({
+          message: "Успешный вход",
+          type: TOAST_TYPE.success,
+        });
+        useNavigate(ROUTES.products);
+      })
+      .catch(() => {
+        useToastNotification({ message: "Неправильный логин или пароль" });
+      })
+      .finally(() => {
+        this.toggleIsLoading();
+      });
+  };
+
   componentDidMount() {
     this.addEventListener("submit", this.signInUser);
+    this.addEventListener("submit", this.signInGoogle);
   }
   componentWillUnmount() {
     this.removeEventListener("submit", this.signInUser);
+    this.removeEventListener("submit", this.signInGoogle);
   }
 }
 

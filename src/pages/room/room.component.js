@@ -10,8 +10,17 @@ export class Room extends Component {
       routes: ROUTES,
     });
 
-    this.state = {};
+    this.state = {
+      isLoading: false,
+    };
   }
+
+  toggleIsLoading = () => {
+    this.setState({
+      ...this.state,
+      isLoading: !this.state.isLoading,
+    });
+  };
 }
 
 customElements.define("room-page", Room);

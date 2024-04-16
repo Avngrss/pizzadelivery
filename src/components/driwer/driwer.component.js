@@ -1,18 +1,22 @@
 import { Component } from "../../core/Component";
-import "../../components/router-link.component";
-import template from "./contacts.template.hbs";
+import template from "./driwer.template.hbs";
 import { ROUTES } from "../../constants/routes";
 
-export class ContactsPage extends Component {
+export class Driver extends Component {
   constructor() {
     super();
+
     this.template = template({
       routes: ROUTES,
     });
     this.state = {
-      isLoading: false,
+      isOpenDriver: true,
     };
   }
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
 }
 
-customElements.define("contacts-page", ContactsPage);
+customElements.define("ui-driwer", Driver);

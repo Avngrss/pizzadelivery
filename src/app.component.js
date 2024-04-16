@@ -27,6 +27,7 @@ import "./components/footer/footer.component";
 import "./components/modal/modal.component";
 import "./components/call-form/call-form.component";
 import "./components/suggest-modal/suggest-modal.component";
+import "./components/driwer/driwer.component";
 
 export class App extends Component {
   constructor() {
