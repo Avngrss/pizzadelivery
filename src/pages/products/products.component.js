@@ -57,13 +57,10 @@ export class Products extends Component {
       .catch(() => {
         useToastNotification({ message: "Сервер не доступен" });
       });
-    // .finally(() => {
-    //   this.toggleIsLoading();
-    // });
   };
 
   filterProducts = (e) => {
-    const meats = this.querySelectorAll(".items");
+    const products = this.querySelectorAll(".items");
     if (e.target.closest(".pizza-block")) {
       meats.forEach((item) => {
         if (!item.classList.contains("pizza")) {
@@ -74,7 +71,7 @@ export class Products extends Component {
       });
     }
     if (e.target.closest(".drinks")) {
-      meats.forEach((item) => {
+      products.forEach((item) => {
         if (!item.classList.contains("drink")) {
           item.style.display = "none";
         } else {
@@ -83,7 +80,7 @@ export class Products extends Component {
       });
     }
     if (e.target.closest(".desserts")) {
-      meats.forEach((item) => {
+      products.forEach((item) => {
         if (!item.classList.contains("dessert")) {
           item.style.display = "none";
         } else {
@@ -92,7 +89,7 @@ export class Products extends Component {
       });
     }
     if (e.target.closest(".snacks")) {
-      meats.forEach((item) => {
+      products.forEach((item) => {
         if (!item.classList.contains("snack")) {
           item.style.display = "none";
         } else {
@@ -117,17 +114,27 @@ export class Products extends Component {
     }
   };
 
+  // getAllProducts = ({ target }) => {
+  //   const add = target.closest(".add");
+  //   console.log(add);
+  //   if (add) {
+  //     const id = add.dataset.id;
+  //     console.log(id);
+  //   }
+  // };
   componentDidMount() {
     // this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
+    this.addEventListener("click", this.getAllProducts);
   }
 
   componentWillUnmount() {
-    this.addEventListener("click", this.filterProducts);
-    this.addEventListener("keyup", this.liveSearch);
+    this.removeEventListener("click", this.filterProducts);
+    this.removeEventListener("keyup", this.liveSearch);
     this.getProducts();
+    this.removeEventListener("click", this.getAllProducts);
     clearTimeout(this.timerID);
   }
 }

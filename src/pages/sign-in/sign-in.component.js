@@ -59,7 +59,6 @@ export class SignIn extends Component {
       })
       .catch(() => {
         useToastNotification({ message: "Неправильный логин или пароль" });
-        this.validateField();
       })
       .finally(() => {
         this.toggleIsLoading();

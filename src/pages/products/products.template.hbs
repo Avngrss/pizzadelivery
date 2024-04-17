@@ -105,6 +105,8 @@
               <div class="flex items-center justify-between">
                 <span class="text-xl font-semibold">от {{this.price}} ₽</span>
                 <ui-button
+                  data-id="{{this.id}}"
+                  class="add"
                   caption="Добавить в корзину"
                   class-name="bg-yellow-400 text-lg text-white mt-3 hover:text-gray-600"
                 ></ui-button>
@@ -113,6 +115,7 @@
           {{/each}}
         </div>
       </div>
+      <button class="check">check</button>
     </div>
   </main>
   <ui-footer></ui-footer>
