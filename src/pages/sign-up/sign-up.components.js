@@ -15,6 +15,12 @@ export class SignUp extends Component {
       routes: ROUTES,
     });
     this.state = {
+      errors: {
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+      },
       isLoading: false,
     };
   }
@@ -41,19 +47,33 @@ export class SignUp extends Component {
         });
         useNavigate(ROUTES.products);
       })
-      .catch((error) => {
-        useToastNotification({ message: error.message });
+      .catch(() => {
+        useToastNotification({ message: "Пожалуйста, заполните все поля" });
       })
       .finally(() => {
         this.toggleIsLoading();
       });
   };
 
+  validateField = ({ target }) => {
+    if (target.value === "") {
+      this.setState({
+        ...this.state,
+        errors: {
+          ...this.state.errors,
+          [target.name]: "empty",
+        },
+      });
+    }
+  };
+
   componentDidMount() {
     this.addEventListener("submit", this.registerUser);
+    this.addEventListener("change", this.validateField);
   }
   componentWillUnmount() {
     this.removeEventListener("submit", this.registerUser);
+    this.removeEventListener("change", this.validateField);
   }
 }
 

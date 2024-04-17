@@ -9,14 +9,7 @@ export class Driver extends Component {
     this.template = template({
       routes: ROUTES,
     });
-    this.state = {
-      isOpenDriver: true,
-    };
   }
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
 }
 
 customElements.define("ui-driwer", Driver);

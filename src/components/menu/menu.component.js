@@ -63,7 +63,7 @@ export class Menu extends Component {
       rejectCaption: "Отменить",
       title: "Заказать звонок",
       onSuccess: (modal) => {
-        const form = modal.querySelector(".call-form ");
+        const form = modal.querySelector(".ui-call-form");
         const formData = extractFormData(form);
         console.log(formData);
         useToastNotification({

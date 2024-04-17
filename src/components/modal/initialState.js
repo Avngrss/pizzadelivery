@@ -6,5 +6,4 @@ export const initialState = {
   title: "",
   template: null,
   onSuccess: null,
-  className: "",
 };

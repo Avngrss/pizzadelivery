@@ -44,23 +44,33 @@
             ></router-link>
           </p>
           <form class="flex flex-col gap-3 sign-in-form mt-12">
-            <ui-input
-              placeholder="Введите email"
-              label="Ваш email"
-              name="email"
-              type="email"
-              error="{{errors.email}}"
-              class="border-black-200 rounded in text-orange-500"
-              class-name="p-1 focus:outline-none focus:border-orange-300 focus:ring-1 focus:ring-orange-300"
-            ></ui-input>
-            <ui-input
-              label="Пароль"
-              type="password"
-              name="password"
-              class="text-orange-500"
-              placeholder="Введите пароль"
-              class-name="p-1 focus:outline-none focus:border-orange-300 focus:ring-1 focus:ring-orange-300"
-            ></ui-input>
+            <label>
+              {{#if errors.email}}
+                <p class="text-red-500">Неверный email!</p>
+              {{/if}}
+              <ui-input
+                placeholder="Введите email"
+                label="Ваш email"
+                name="email"
+                type="email"
+                error="{{errors.email}}"
+                class="border-black-200 rounded in text-orange-500"
+                class-name="p-1 focus:outline-none focus:border-orange-300 focus:ring-1 focus:ring-orange-300"
+              ></ui-input>
+            </label>
+            <label>
+              {{#if errors.password}}
+                <p class="text-red-500">Неверный Пароль!</p>
+              {{/if}}
+              <ui-input
+                label="Пароль"
+                type="password"
+                name="password"
+                class="text-orange-500 psw"
+                placeholder="Введите пароль"
+                class-name="p-1 focus:outline-none focus:border-orange-300 focus:ring-1 focus:ring-orange-300"
+              ></ui-input>
+            </label>
             <ui-button
               class="btn"
               caption="Войти"

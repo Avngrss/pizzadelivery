@@ -42,6 +42,9 @@
               href="${props.routes.signIn}"
             ></router-link>
           <form class="flex flex-col gap-3 sign-in-form mt-12">
+            {{#if errors.email}}
+              <p class="text-red-500">Неверный email!</p>
+            {{/if}}
           <ui-input
             class="text-orange-500"
             label="Ваш email"
@@ -49,18 +52,29 @@
             type="email"
             class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
           ></ui-input>
+            {{#if errors.firstName}}
+              <p class="text-red-500">Поле не может быть пустым!</p>
+            {{/if}}
           <ui-input
             class="text-orange-500"
             label="Ваше имя"
             type="text"
+            name="firstName"
             class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
           ></ui-input>
+            {{#if errors.lastName}}
+              <p class="text-red-500">Поле не может быть пустым!</p>
+            {{/if}}
           <ui-input
             class="text-orange-500"
             label="Ваша фамилия"
             type="text"
+            name="lastName"
             class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
           ></ui-input>
+           {{#if errors.password}}
+              <p class="text-red-500">Неверный Пароль!</p>
+            {{/if}}
           <ui-input
             class="text-orange-500"
             label="Пароль"
@@ -68,6 +82,9 @@
             name="password"
             class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
           ></ui-input>
+           {{#if errors.password}}
+              <p class="text-red-500">Пароли не совпадают!</p>
+            {{/if}}
           <ui-input
             class="text-orange-500"
             label="Подтвердить пароль"
@@ -84,6 +101,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

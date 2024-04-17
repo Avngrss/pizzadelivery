@@ -17,6 +17,7 @@ export class SignIn extends Component {
     this.state = {
       errors: {
         email: "",
+        password: "",
       },
       isLoading: false,
     };
@@ -27,6 +28,18 @@ export class SignIn extends Component {
       ...this.state,
       isLoading: !this.state.isLoading,
     });
+  };
+
+  validateField = ({ target }) => {
+    if (target.value === "") {
+      this.setState({
+        ...this.state,
+        errors: {
+          ...this.state.errors,
+          [target.name]: "empty",
+        },
+      });
+    }
   };
 
   signInUser = (evt) => {
@@ -46,6 +59,7 @@ export class SignIn extends Component {
       })
       .catch(() => {
         useToastNotification({ message: "Неправильный логин или пароль" });
+        this.validateField();
       })
       .finally(() => {
         this.toggleIsLoading();
@@ -64,9 +78,6 @@ export class SignIn extends Component {
         });
         useNavigate(ROUTES.products);
       })
-      .catch(() => {
-        useToastNotification({ message: "Неправильный логин или пароль" });
-      })
       .finally(() => {
         this.toggleIsLoading();
       });
@@ -75,10 +86,12 @@ export class SignIn extends Component {
   componentDidMount() {
     this.addEventListener("submit", this.signInUser);
     this.addEventListener("submit", this.signInGoogle);
+    this.addEventListener("change", this.validateField);
   }
   componentWillUnmount() {
     this.removeEventListener("submit", this.signInUser);
     this.removeEventListener("submit", this.signInGoogle);
+    this.removeEventListener("change", this.validateField);
   }
 }
 
