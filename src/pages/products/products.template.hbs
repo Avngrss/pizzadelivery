@@ -94,6 +94,7 @@
         <div class="products grid grid-cols-4 gap-8 mt-8">
           {{#each products}}
             <div
+              data-id="{{this.id}}"
               class="border-2 border-gray-300 rounded-lg p-3 items hover:scale-110 ease-in duration-300
                 {{this.className}}"
             >
@@ -105,7 +106,6 @@
               <div class="flex items-center justify-between">
                 <span class="text-xl font-semibold">от {{this.price}} ₽</span>
                 <ui-button
-                  data-id="{{this.id}}"
                   class="add"
                   caption="Добавить в корзину"
                   class-name="bg-yellow-400 text-lg text-white mt-3 hover:text-gray-600"

@@ -116,9 +116,9 @@ export class Products extends Component {
 
   // getAllProducts = ({ target }) => {
   //   const add = target.closest(".add");
+  //   const id = add.parentElement.parentElement.dataset.id;
   //   console.log(add);
   //   if (add) {
-  //     const id = add.dataset.id;
   //     console.log(id);
   //   }
   // };
