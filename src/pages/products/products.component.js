@@ -62,7 +62,7 @@ export class Products extends Component {
   filterProducts = (e) => {
     const products = this.querySelectorAll(".items");
     if (e.target.closest(".pizza-block")) {
-      meats.forEach((item) => {
+      products.forEach((item) => {
         if (!item.classList.contains("pizza")) {
           item.style.display = "none";
         } else {

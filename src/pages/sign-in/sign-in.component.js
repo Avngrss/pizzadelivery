@@ -42,6 +42,7 @@ export class SignIn extends Component {
     }
   };
 
+
   signInUser = (evt) => {
     evt.preventDefault();
     const { setUser } = useUserStore();
@@ -63,33 +64,34 @@ export class SignIn extends Component {
       .finally(() => {
         this.toggleIsLoading();
       });
-  };
+    }
 
-  signInGoogle = (evt) => {
-    evt.preventDefault();
-    this.toggleIsLoading();
-    authService
-      .signInWitchGoogle()
-      .then(() => {
-        useToastNotification({
-          message: "Успешный вход",
-          type: TOAST_TYPE.success,
+    signInGoogle = (evt) => {
+      evt.preventDefault();
+      this.toggleIsLoading();
+      authService
+        .signInWitchGoogle()
+        .then(() => {
+          useToastNotification({
+            message: "Успешный вход",
+            type: TOAST_TYPE.success,
+          });
+          useNavigate(ROUTES.products);
+        })
+        .finally(() => {
+          this.toggleIsLoading();
         });
-        useNavigate(ROUTES.products);
-      })
-      .finally(() => {
-        this.toggleIsLoading();
-      });
-  };
+    };
+ 
 
   componentDidMount() {
     this.addEventListener("submit", this.signInUser);
-    this.addEventListener("submit", this.signInGoogle);
+    // this.addEventListener("submit", this.signInGoogle);
     this.addEventListener("change", this.validateField);
   }
   componentWillUnmount() {
     this.removeEventListener("submit", this.signInUser);
-    this.removeEventListener("submit", this.signInGoogle);
+    // this.removeEventListener("submit", this.signInGoogle);
     this.removeEventListener("change", this.validateField);
   }
 }
