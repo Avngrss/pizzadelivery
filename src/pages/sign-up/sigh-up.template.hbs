@@ -34,70 +34,58 @@
           class="mt-16 border-orange-400 border-2 p-9 h-2/5 w-2/4 rounded-lg m-0"
         >
           <h1 class="text-2xl">Регистрация аккаунта</h1>
-          <p class="text-slate-400 mt-3 text-sm">
-            Уже есть аккаунт?
-            <router-link
-              label="Войти"
-              class="text-orange-500"
-              href="${props.routes.signIn}"
-            ></router-link>
-          <form class="flex flex-col gap-3 sign-in-form mt-12">
-            {{#if errors.email}}
-              <p class="text-red-500">Неверный email!</p>
-            {{/if}}
-          <ui-input
-            class="text-orange-500"
-            label="Ваш email"
-            name="email"
-            type="email"
-            class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-          ></ui-input>
-            {{#if errors.firstName}}
-              <p class="text-red-500">Поле не может быть пустым!</p>
-            {{/if}}
-          <ui-input
-            class="text-orange-500"
-            label="Ваше имя"
-            type="text"
-            name="firstName"
-            class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-          ></ui-input>
-            {{#if errors.lastName}}
-              <p class="text-red-500">Поле не может быть пустым!</p>
-            {{/if}}
-          <ui-input
-            class="text-orange-500"
-            label="Ваша фамилия"
-            type="text"
-            name="lastName"
-            class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-          ></ui-input>
-           {{#if errors.password}}
-              <p class="text-red-500">Неверный Пароль!</p>
-            {{/if}}
-          <ui-input
-            class="text-orange-500"
-            label="Пароль"
-            type="password"
-            name="password"
-            class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-          ></ui-input>
-           {{#if errors.password}}
-              <p class="text-red-500">Пароли не совпадают!</p>
-            {{/if}}
-          <ui-input
-            class="text-orange-500"
-            label="Подтвердить пароль"
-            type="password"
-            name="password"
-            class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-          ></ui-input>
-          <ui-button
-            caption="Зарегистрироваться"
-            class-name="block w-full text-white"
-            class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-          ></ui-button>
-        </form>
+          <form class="text-slate-400 mt-3 text-sm">
+            <div class="flex flex-col gap-3 sign-in-form mt-12">
+              <p class="flex items-center gap-2">
+                <span> Уже есть аккаунт?</span>
+                <router-link
+                  label="Войти"
+                  class="text-orange-500"
+                  href="${props.routes.signIn}"
+                ></router-link>
+              </p>
+              <ui-input
+                class="text-orange-500"
+                label="Ваш email"
+                name="email"
+                type="email"
+                class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+              ></ui-input>
+              <ui-input
+                class="text-orange-500"
+                label="Ваше имя"
+                type="text"
+                name="displayName"
+                class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+              ></ui-input>
+              <ui-input
+                class="text-orange-500"
+                label="Ваш телефон"
+                type="tel"
+                name="phoneNumber"
+                class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+              ></ui-input>
+              <ui-input
+                class="text-orange-500"
+                label="Пароль"
+                type="password"
+                name="password"
+                class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+              ></ui-input>
+              <ui-input
+                class="text-orange-500"
+                label="Подтвердить пароль"
+                type="password"
+                name="password"
+                class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+              ></ui-input>
+              <ui-button
+                caption="Зарегистрироваться"
+                class-name="block w-full text-white"
+                class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+              ></ui-button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

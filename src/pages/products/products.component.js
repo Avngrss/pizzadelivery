@@ -5,6 +5,7 @@ import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 import { useModal } from "../../hooks/useModal";
 import { useToastNotification } from "../../hooks/useToastNotification";
+import { storageService } from "../../services/Storage";
 
 //Swiper-slider
 // import function to register Swiper custom elements
@@ -21,8 +22,10 @@ export class Products extends Component {
       routes: ROUTES,
     });
     this.timerID = null;
+
     this.state = {
       error: "",
+      cartProduct: [],
       products: [],
       isOpen: false,
       isLoading: false,
@@ -58,10 +61,10 @@ export class Products extends Component {
         useToastNotification({ message: "Сервер не доступен" });
       });
   };
-
   filterProducts = (e) => {
     const products = this.querySelectorAll(".items");
     if (e.target.closest(".pizza-block")) {
+      console.log("click");
       products.forEach((item) => {
         if (!item.classList.contains("pizza")) {
           item.style.display = "none";
@@ -98,7 +101,6 @@ export class Products extends Component {
       });
     }
   };
-
   liveSearch = (e) => {
     const searchValue = e.target.value.toUpperCase();
     const items = this.querySelectorAll(".items");
@@ -113,14 +115,49 @@ export class Products extends Component {
       }
     }
   };
+  openCart = (e) => {
+    const cartHid = this.querySelector(".cart-hid");
+    if (e.target.closest(".cart")) {
+      cartHid.classList.remove("hidden");
+      cartHid.classList.add("block");
+    }
+  };
+  closeCart = (e) => {
+    const cartHid = this.querySelector(".cart-hid");
+    if (e.target.closest(".drawer-reject-trigger")) {
+      cartHid.classList.remove("block");
+      cartHid.classList.add("hidden");
+    }
+  };
+  addToCard = (e) => {
+    if (e.target.closest(".add-to-cart")) {
+      let id = e.target.dataset.id;
+      let price = e.target.previousSibling.previousSibling.dataset.price;
+      let title = e.target.parentElement.parentElement.dataset.title;
+      let img = e.target.parentElement.parentElement.dataset.img;
+      let qty = e.target.parentElement.parentElement.dataset.qty;
+      this.cartProduct = [{ id, price, title, img, qty }];
+      this.setState({
+        cartProduct: this.cartProduct.map((item) => {
+          storageService.setItem("products", item);
+          return item;
+        }),
+      });
+    }
+  };
+  removeItemCard = (e) => {
+    if (e.target.closest(".delete-btn")) {
+      this.setState({
+        cartProduct: this.cartProduct.filter((item) => {
+          item.id != item.id;
+          storageService.removeItem("products");
+        }),
+      });
+    }
+  };
 
-  // getAllProducts = ({ target }) => {
-  //   const add = target.closest(".add");
-  //   const id = add.parentElement.parentElement.dataset.id;
-  //   console.log(add);
-  //   if (add) {
-  //     console.log(id);
-  //   }
+  // updateCart = () => {
+  //   this.calcSubtotalPrice();
   // };
   componentDidMount() {
     // this.timerID = setTimeout(this.openSuggestModal, 3000);
@@ -128,6 +165,11 @@ export class Products extends Component {
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
     this.addEventListener("click", this.getAllProducts);
+    this.addEventListener("click", this.addToCard);
+    this.addEventListener("click", this.openCart);
+    this.addEventListener("click", this.closeCart);
+    this.addEventListener("click", this.removeItemCard);
+    // this.updateCart();
   }
 
   componentWillUnmount() {
@@ -135,6 +177,11 @@ export class Products extends Component {
     this.removeEventListener("keyup", this.liveSearch);
     this.getProducts();
     this.removeEventListener("click", this.getAllProducts);
+    this.removeEventListener("click", this.addToCard);
+    this.removeEventListener("click", this.openCart);
+    this.removeEventListener("click", this.closeCart);
+    this.removeEventListener("click", this.removeItemCard);
+    // this.updateCart();
     clearTimeout(this.timerID);
   }
 }

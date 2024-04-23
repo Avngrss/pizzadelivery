@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import { firebaseService } from "./Firebase";
 
@@ -30,6 +31,14 @@ export class AuthService {
     } catch (error) {
       const credential = GoogleAuthProvider.credentialFromError(error);
     }
+  }
+
+  getCurrentUser() {
+    return this._auth.currentUser;
+  }
+
+  updateUserProfile(data) {
+    return updateProfile(this._auth.currentUser, data);
   }
 
   signIn(email, password) {

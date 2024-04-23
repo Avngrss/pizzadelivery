@@ -28,6 +28,7 @@ import "./components/modal/modal.component";
 import "./components/call-form/call-form.component";
 import "./components/suggest-modal/suggest-modal.component";
 import "./components/driwer/driwer.component";
+import "./components/order-form/order-form.component";
 
 export class App extends Component {
   constructor() {

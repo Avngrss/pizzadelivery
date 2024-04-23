@@ -1,0 +1,64 @@
+<form class="call-form flex flex-col gap-3 order-form">
+  <h1>Заказ на доставку</h1>
+  <label class="w-full">
+    <p class="text-lg text-orange-500">Ваше имя</p>
+    <input
+      type="text"
+      name="title"
+      class="p-1 w-full border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+    />
+  </label>
+
+  <label class="w-full">
+    <p class="text-lg text-orange-500">Ваш телефон</p>
+    <input
+      type="tel"
+      name="phone"
+      class="p-1 w-full border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+    />
+  </label>
+  <label class="w-full">
+    <p class="text-lg text-orange-500">Дата доставки</p>
+    <input
+      type="date"
+      name="date"
+      class="p-1 w-full border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+    />
+  </label>
+  <label class="w-full">
+    <p class="text-lg text-orange-500">Ваш адрес</p>
+    <input
+      type="text"
+      name="adr"
+      class="p-1 h-14 w-full border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+    />
+  </label>
+  <div>
+    <label class="w-full">
+      <p class="text-lg text-red-500">Способ оплаты курьеру?</p>
+      <div class="flex justify-between items-center">
+        <div>
+          <label class="text-red-500" for="">
+            Наличные
+          </label>
+          <input
+            type="radio"
+            name="cash"
+            class="p-1 border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+          />
+        </div>
+        <div>
+          <label class="text-red-500" for="">
+            Картой
+          </label>
+          <input
+            type="radio"
+            name="card"
+            class="p-1 border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
+          />
+        </div>
+      </div>
+    </label>
+  </div>
+
+</form>

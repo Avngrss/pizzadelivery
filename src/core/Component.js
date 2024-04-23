@@ -11,6 +11,7 @@ export class Component extends HTMLElement {
   setState(state) {
     this.state = state;
     this.compile();
+    console.log(state);
   }
 
   compile() {

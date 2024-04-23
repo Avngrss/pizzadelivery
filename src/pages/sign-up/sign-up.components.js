@@ -34,18 +34,20 @@ export class SignUp extends Component {
 
   registerUser = (evt) => {
     evt.preventDefault();
-    const formData = extractFormData(evt.target);
+    const { email, password, ...rest } = extractFormData(evt.target);
     this.toggleIsLoading();
     const { setUser } = useUserStore();
     authService
-      .signUp(formData.email, formData.password)
-      .then((data) => {
-        setUser({ ...data.user });
-        useToastNotification({
-          message: "Успешный вход",
-          type: TOAST_TYPE.success,
+      .signUp(email, password)
+      .then(() => {
+        authService.updateUserProfile(rest).then(() => {
+          setUser({ ...authService.getCurrentUser() });
+          useToastNotification({
+            message: "Успешный вход",
+            type: TOAST_TYPE.success,
+          });
+          useNavigate(ROUTES.products);
         });
-        useNavigate(ROUTES.products);
       })
       .catch(() => {
         useToastNotification({ message: "Пожалуйста, заполните все поля" });

@@ -3,6 +3,28 @@
   <div>
     <ui-menu></ui-menu>
   </div>
-  <div class="animate-fade-left animate-duration-1000">
+  <div class="mt-4 animate-fade-left animate-duration-1000">
+    <div class="flex justify-between">
+      <div>
+        <h1 class="uppercase font-semibold">Текущий профиль</h1>
+        <div class="flex flex-col items-center">
+          <a
+            href="{{user.email}}"
+            class="text-lg font-light mt-2 email text-yellow-100"
+          >{{user.email}}</a>
+          <span>{{user.displayName}}</span>
+          <span>{{user.phoneNumber}}</span>
+        </div>
+      </div>
+      <div class="rounded-lg border border-gray-400 p-2 w-full">
+        <h2 class="uppercase font-semibold">Ваш заказ</h2>
+        <ui-button
+          class="order"
+          caption="Заказать"
+          class-name="text-white"
+        ></ui-button>
+      </div>
+    </div>
   </div>
+  <ui-footer></ui-footer>
 </div>

@@ -8,6 +8,7 @@ import { useNavigate } from "../../hooks/useNavigate";
 import { useModal } from "../../hooks/useModal";
 import { extractFormData } from "../../utils/extractFormData";
 import { TOAST_TYPE } from "../../constants/toast";
+import { bot } from "../bot/bot";
 
 import "../../../style.css";
 
@@ -23,7 +24,6 @@ export class Menu extends Component {
       isOpen: false,
       isLoading: false,
       user: null,
-      isOpenDriwer: false
     };
   }
 
@@ -64,8 +64,9 @@ export class Menu extends Component {
       rejectCaption: "Отменить",
       title: "Заказать звонок",
       onSuccess: (modal) => {
-        const form = modal.querySelector(".ui-call-form");
+        const form = modal.querySelector(".call-form");
         const formData = extractFormData(form);
+        bot(form, formData);
         console.log(formData);
         useToastNotification({
           message: "Ваше сообщение получено. В скором времени с вами свяжутся",
@@ -75,27 +76,9 @@ export class Menu extends Component {
     });
   }
 
-  openDriwer = () => {
-    this.setState({
-      isOpenDriwer: true
-    })
-  }
-
-  closeDriwer = () => {
-    this.setState({
-      isOpenDriwer: false
-    })
-  }
-
   onClick = ({ target }) => {
     if (target.closest(".order-call")) {
       this.openCallModal();
-    }
-    if(target.closest('.cart')) {
-      this.openDriwer()
-    }
-    if(target.closest('.close-driwer')) {
-      this.closeDriwer()
     }
   };
 

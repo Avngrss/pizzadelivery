@@ -18,6 +18,7 @@ export class SignIn extends Component {
       errors: {
         email: "",
         password: "",
+        text: "",
       },
       isLoading: false,
     };
@@ -42,9 +43,8 @@ export class SignIn extends Component {
     }
   };
 
-
-  signInUser = (evt) => {
-    evt.preventDefault();
+  signInUser = (e) => {
+    e.preventDefault();
     const { setUser } = useUserStore();
     const formData = extractFormData(evt.target);
     this.toggleIsLoading();
@@ -64,35 +64,44 @@ export class SignIn extends Component {
       .finally(() => {
         this.toggleIsLoading();
       });
-    }
+  };
 
-    signInGoogle = (evt) => {
-      evt.preventDefault();
-      this.toggleIsLoading();
-      authService
-        .signInWitchGoogle()
-        .then(() => {
-          useToastNotification({
-            message: "Успешный вход",
-            type: TOAST_TYPE.success,
-          });
-          useNavigate(ROUTES.products);
-        })
-        .finally(() => {
-          this.toggleIsLoading();
+  signInGoogle = (e) => {
+    e.preventDefault();
+    this.toggleIsLoading();
+    authService
+      .signInWitchGoogle()
+      .then(() => {
+        useToastNotification({
+          message: "Успешный вход",
+          type: TOAST_TYPE.success,
         });
-    };
- 
+        useNavigate(ROUTES.products);
+      })
+      .finally(() => {
+        this.toggleIsLoading();
+      });
+  };
+
+  logger = (e) => {
+    if (e.target.closest(".btn")) {
+      this.signInUser();
+    } else if (e.target.closest(".btn-google")) {
+      this.signInGoogle();
+    }
+  };
 
   componentDidMount() {
     this.addEventListener("submit", this.signInUser);
-    // this.addEventListener("submit", this.signInGoogle);
+    this.addEventListener("submit", this.signInGoogle);
     this.addEventListener("change", this.validateField);
+    this.addEventListener("click", this.logger);
   }
   componentWillUnmount() {
     this.removeEventListener("submit", this.signInUser);
-    // this.removeEventListener("submit", this.signInGoogle);
+    this.removeEventListener("click", this.signInGoogle);
     this.removeEventListener("change", this.validateField);
+    this.removeEventListener("click", this.logger);
   }
 }
 

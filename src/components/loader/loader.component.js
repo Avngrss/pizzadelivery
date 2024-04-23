@@ -7,7 +7,7 @@ export class Loader extends Component {
     this.template = template();
 
     this.state = {
-      isLoading: JSON.parse(this.getAttribute("loading")),
+      // isLoading: JSON.parse(this.getAttribute("loading")),
       className: this.getAttribute("class-name"),
     };
   }

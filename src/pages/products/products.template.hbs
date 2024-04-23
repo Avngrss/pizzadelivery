@@ -1,11 +1,79 @@
-<div class="container mx-auto px-4">
-  <main>
+<div class="container mx-auto px-4 relative">
+  <main class="relative">
     <ui-loader
       loading="{{isLoading}}"
       class-name="z-10 bg-white/70"
     ></ui-loader>
     <div>
-      <ui-menu></ui-menu>
+      <ui-menu class="relative"></ui-menu>
+      <div
+        class="fixed hidden cart-hid top-0 right-0 bottom-0 z-50 bg-black/[0.5]"
+      >
+        <div class="w-[400px] h-full">
+          <!-- Drawer content -->
+          <div
+            class="bg-white shadow animate-fade-left animate-duration-500 pb-5"
+          >
+            <!-- Drawer header -->
+            <div
+              class="flex items-center justify-between p-4 border-b rounded-t"
+            >
+              <h3 class="text-xl font-semibold text-gray-900">
+                Корзина
+              </h3>
+              <button
+                type="button"
+                class="drawer-reject-trigger text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg w-8 h-8 ms-auto inline-flex justify-center items-center"
+                data-modal-hide="default-modal"
+              >
+                <div class="icon-x-circle text-orange-300">X</div>
+              </button>
+            </div>
+            <div
+              class="p-4 space-y-4 drawer-body h-screen overflow-auto pb-20 flex justify-between flex-col"
+            >
+              <div class="cart-items">
+                {{#each cartProduct}}
+                  <div class="flex items-center gap-5 relative">
+                    <img
+                      class="w-[100px] h-[100px]"
+                      src="{{this.img}}"
+                      alt=""
+                    />
+                    <div class="flex flex-col items-center gap-3">
+                      <div
+                        class="font-bold"
+                        data-id="{{this.id}}"
+                      >{{this.title}}</div>
+                      <strong>{{this.price}} ₽</strong>
+                      <div class="flex items-center gap-5">
+                        <span
+                          class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer"
+                        >-</span>
+                        <strong>{{this.qty}}</strong>
+                        <span
+                          class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer"
+                        >+</span>
+                      </div>
+                    </div>
+                    <div
+                      class="absolute top-0 right-0 cursor-pointer bg-orange-200 p-1 rounded-full"
+                    ><span class="delete-btn">&times;</span></div>
+                  </div>
+                {{/each}}
+              </div>
+              <div>
+                <p>Сумма заказа: <span class="total-price">0</span></p>
+                <router-link
+                  href="${props.routes.room}"
+                  class="text-white block p-1 rounded-lg w-full bg-orange-400 mt-30 text-center"
+                  label="Заказать"
+                ></router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="animate-fade-left animate-duration-1000">
       <div class="mt-6">
@@ -91,32 +159,41 @@
             class="search-input w-96"
           ></ui-input>
         </div>
+
         <div class="products grid grid-cols-4 gap-8 mt-8">
           {{#each products}}
             <div
-              data-id="{{this.id}}"
               class="border-2 border-gray-300 rounded-lg p-3 items hover:scale-110 ease-in duration-300
                 {{this.className}}"
             >
-              <img src="{{this.img}}" alt="pizza" />
-              <h3
-                class="text-gray-500 font-bold text-xl title"
-              >{{this.title}}</h3>
-              <p class="text-sm text-gray-400 mt-3">{{this.description}}</p>
-              <div class="flex items-center justify-between">
-                <span class="text-xl font-semibold">от {{this.price}} ₽</span>
-                <ui-button
-                  class="add"
-                  caption="Добавить в корзину"
-                  class-name="bg-yellow-400 text-lg text-white mt-3 hover:text-gray-600"
-                ></ui-button>
+              <div
+                data-qty="{{this.qty}}"
+                data-img="{{this.img}}"
+                data-title="{{this.title}}"
+              >
+                <img src="{{this.img}}" alt="pizza" />
+                <h3
+                  class="text-gray-500 font-bold text-xl title"
+                >{{this.title}}</h3>
+                <p class="text-sm text-gray-400 mt-3">{{this.description}}</p>
+                <div class="flex items-center justify-between">
+                  <span
+                    data-price="{{this.price}}"
+                    class="text-xl font-semibold"
+                  >от {{this.price}} ₽</span>
+                  <button
+                    data-id="{{this.id}}"
+                    class="bg-yellow-400 p-3 text-lg add-to-cart text-white mt-3 hover:text-gray-600"
+                  >Добавить в корзину</button>
+                </div>
               </div>
             </div>
           {{/each}}
         </div>
       </div>
-      <button class="check">check</button>
     </div>
   </main>
+  <div class="cart-items">
+  </div>
   <ui-footer></ui-footer>
 </div>
