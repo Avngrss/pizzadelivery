@@ -31,6 +31,8 @@ export class Room extends Component {
       successCaption: "Заказать",
       title: "Оформить заказ",
       onSuccess: (modal) => {
+        const body = document.querySelector(".order-body");
+        body.innerHTML = "";
         const form = modal.querySelector(".order-form");
         const formData = extractFormData(form);
         console.log(formData);
