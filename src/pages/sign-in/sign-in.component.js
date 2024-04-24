@@ -15,11 +15,11 @@ export class SignIn extends Component {
       routes: ROUTES,
     });
     this.state = {
-      errors: {
-        email: "",
-        password: "",
-        text: "",
-      },
+      // errors: {
+      //   email: "",
+      //   password: "",
+      //   text: "",
+      // },
       isLoading: false,
     };
   }
@@ -44,31 +44,33 @@ export class SignIn extends Component {
   };
 
   signInUser = (e) => {
-    e.preventDefault();
-    const { setUser } = useUserStore();
-    const formData = extractFormData(e.target);
-    this.toggleIsLoading();
-    authService
-      .signIn(formData.email, formData.password)
-      .then((data) => {
-        setUser({ ...data.user });
-        useToastNotification({
-          message: "Успешный вход",
-          type: TOAST_TYPE.success,
-        });
-        useNavigate(ROUTES.products);
-      })
-      .catch(() => {
-        useToastNotification({ message: "Неправильный логин или пароль" });
-      })
-      .finally(() => {
-        this.toggleIsLoading();
-      });
+    console.log('iuyuuyg');
+    // e.preventDefault();
+    // const { setUser } = useUserStore();
+    // const formData = extractFormData(e.target);
+    // this.toggleIsLoading();
+    // authService
+    //   .signIn(formData.email, formData.password)
+    //   .then((data) => {
+    //     setUser({ ...data.user });
+    //     useToastNotification({
+    //       message: "Успешный вход",
+    //       type: TOAST_TYPE.success,
+    //     });
+    //     useNavigate(ROUTES.products);
+    //   })
+    //   .catch(() => {
+    //     useToastNotification({ message: "Неправильный логин или пароль" });
+    //   })
+    //   .finally(() => {
+    //     this.toggleIsLoading();
+    //   });
   };
 
   signInGoogle = (e) => {
     e.preventDefault();
-    this.toggleIsLoading();
+    if(e.target.closest('.btn-google')) {
+      this.toggleIsLoading();
     authService
       .signInWitchGoogle()
       .then(() => {
@@ -81,20 +83,23 @@ export class SignIn extends Component {
       .finally(() => {
         this.toggleIsLoading();
       });
+    }
+    
   };
 
   componentDidMount() {
-    this.addEventListener("submit", this.signInGoogle);
-    this.addEventListener("submit", this.signInUser);
+    this.addEventListener('submit', this.signInUser)
+    this.addEventListener("click", this.signInGoogle);
+    // this.addEventListener("submit", this.signInUser);
 
-    this.addEventListener("change", this.validateField);
+    // this.addEventListener("change", this.validateField);
     // this.addEventListener("click", this.logger);
   }
   componentWillUnmount() {
-    this.removeEventListener("submit", this.signInGoogle);
-    this.removeEventListener("submit", this.signInUser);
+    // this.removeEventListener("click", this.signInGoogle);
+    // this.removeEventListener("submit", this.signInUser);
 
-    this.removeEventListener("change", this.validateField);
+    // this.removeEventListener("change", this.validateField);
     // this.removeEventListener("click", this.logger);
   }
 }
