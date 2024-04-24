@@ -12,7 +12,7 @@ export class Input extends Component {
       type: this.getAttribute("type") ?? "text",
       placeholder: this.getAttribute("placeholder") ?? "",
       className: this.getAttribute("class-name"),
-      required: this.getAttribute("required") ?? true,
+      required: this.getAttribute("required"),
     };
   }
 }

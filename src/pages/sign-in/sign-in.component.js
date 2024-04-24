@@ -46,7 +46,7 @@ export class SignIn extends Component {
   signInUser = (e) => {
     e.preventDefault();
     const { setUser } = useUserStore();
-    const formData = extractFormData(evt.target);
+    const formData = extractFormData(e.target);
     this.toggleIsLoading();
     authService
       .signIn(formData.email, formData.password)
@@ -83,25 +83,19 @@ export class SignIn extends Component {
       });
   };
 
-  logger = (e) => {
-    if (e.target.closest(".btn")) {
-      this.signInUser();
-    } else if (e.target.closest(".btn-google")) {
-      this.signInGoogle();
-    }
-  };
-
   componentDidMount() {
-    this.addEventListener("submit", this.signInUser);
     this.addEventListener("submit", this.signInGoogle);
+    this.addEventListener("submit", this.signInUser);
+
     this.addEventListener("change", this.validateField);
-    this.addEventListener("click", this.logger);
+    // this.addEventListener("click", this.logger);
   }
   componentWillUnmount() {
+    this.removeEventListener("submit", this.signInGoogle);
     this.removeEventListener("submit", this.signInUser);
-    this.removeEventListener("click", this.signInGoogle);
+
     this.removeEventListener("change", this.validateField);
-    this.removeEventListener("click", this.logger);
+    // this.removeEventListener("click", this.logger);
   }
 }
 

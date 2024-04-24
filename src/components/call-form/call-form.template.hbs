@@ -1,21 +1,21 @@
 <form class="call-form flex flex-col gap-3 call-form">
-  <label class="w-full">
-    <p class="text-lg text-orange-500">Ваше имя</p>
-    <input
-      required
+  <label>
+    <ui-input
+      label="Ваше имя"
       type="text"
-      name="title"
-      class="p-1 w-full border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-    />
+      name="name"
+      class="text-orange-500 psw"
+      class-name="p-1 focus:outline-none focus:border-orange-300 focus:ring-1 focus:ring-orange-300"
+    ></ui-input>
   </label>
 
-  <label class="w-full">
-    <p class="text-lg text-orange-500">Ваш телефон</p>
-    <input
-      required
+  <label>
+    <ui-input
+      label="Ваш телефон"
       type="tel"
       name="phone"
-      class="p-1 w-full border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-    />
+      class="text-orange-500 psw"
+      class-name="p-1 focus:outline-none focus:border-orange-300 focus:ring-1 focus:ring-orange-300"
+    ></ui-input>
   </label>
 </form>

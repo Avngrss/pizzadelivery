@@ -34,7 +34,7 @@
             >
               <div class="cart-items">
                 {{#each cartProduct}}
-                  <div class="flex items-center gap-5 relative">
+                  <div class="flex items-center gap-5 relative mt-3">
                     <img
                       class="w-[100px] h-[100px]"
                       src="{{this.img}}"
@@ -48,11 +48,11 @@
                       <strong>{{this.price}} ₽</strong>
                       <div class="flex items-center gap-5">
                         <span
-                          class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer"
+                          class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer minus"
                         >-</span>
                         <strong>{{this.qty}}</strong>
                         <span
-                          class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer"
+                          class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer plus"
                         >+</span>
                       </div>
                     </div>

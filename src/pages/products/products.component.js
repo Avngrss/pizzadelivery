@@ -5,7 +5,8 @@ import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 import { useModal } from "../../hooks/useModal";
 import { useToastNotification } from "../../hooks/useToastNotification";
-import { storageService } from "../../services/Storage";
+// import { storageService } from "../../services/Storage";
+import { useCartStorage } from "../../hooks/useCartStorage";
 
 //Swiper-slider
 // import function to register Swiper custom elements
@@ -14,6 +15,7 @@ import { register } from "swiper/element/bundle";
 register();
 
 import "./products.css";
+import { storageService } from "../../services/Storage";
 
 export class Products extends Component {
   constructor() {
@@ -137,20 +139,19 @@ export class Products extends Component {
       let title = e.target.parentElement.parentElement.dataset.title;
       let img = e.target.parentElement.parentElement.dataset.img;
       let qty = e.target.parentElement.parentElement.dataset.qty;
-     const cartProduct = [{ id, price, title, img, qty }];
+      const cartProduct = [{ id, price, title, img, qty }];
       this.setState({
         ...this.state,
         cartProduct: this.state.cartProduct.concat(cartProduct),
       });
     }
   };
-  removeItemCard = (e) => {
+  removeItemCard = (e, id) => {
     if (e.target.closest(".delete-btn")) {
       this.setState({
         ...this.state,
         cartProduct: this.state.cartProduct.filter((item) => {
-          item.id != item.id;
-          storageService.removeItem("products");
+          return item.id != id;
         }),
       });
     }
@@ -159,6 +160,7 @@ export class Products extends Component {
   // updateCart = () => {
   //   this.calcSubtotalPrice();
   // };
+
   componentDidMount() {
     // this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
