@@ -154,7 +154,7 @@ export class Products extends Component {
   getTotalPrice(cartProducts) {
     let totalPrice = 0;
     cartProducts.map((item) => {
-      totalPrice += Number(item.price + totalPrice);
+      totalPrice = Number(item.price) + totalPrice;
     });
 
     return totalPrice;
@@ -185,7 +185,7 @@ export class Products extends Component {
   }
 
   componentDidMount() {
-    // this.timerID = setTimeout(this.openSuggestModal, 3000);
+    this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
