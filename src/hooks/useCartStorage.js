@@ -19,7 +19,7 @@ export const useCartStorage = () => {
   };
 
   const changeCartCount = () => {
-    document.querySelector(".cart-count").innerHTML = getAllItems().length;
+    document.querySelector(".total-price").innerHTML = getAllItems().length;
   };
 
   return {

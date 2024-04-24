@@ -21,6 +21,14 @@
               <h3 class="text-xl font-semibold text-gray-900">
                 Корзина
               </h3>
+              <div class="relative">
+                <div class="relative cart">
+                  <img class="h-10 w-10" src="/cart.svg" alt="cart" />
+                  <span
+                    class="count-products rounded-full absolute -top-1 -right-2 h-6 w-6 text-center text-white bg-red-700"
+                  >{{cartProducts.length}}</span>
+                </div>
+              </div>
               <button
                 type="button"
                 class="drawer-reject-trigger text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg w-8 h-8 ms-auto inline-flex justify-center items-center"
@@ -33,8 +41,11 @@
               class="p-4 space-y-4 drawer-body h-screen overflow-auto pb-20 flex justify-between flex-col"
             >
               <div class="cart-items">
-                {{#each cartProduct}}
-                  <div class="flex items-center gap-5 relative mt-3">
+                {{#each cartProducts}}
+                  <div
+                    class="flex items-center gap-5 relative mt-3"
+                    data-id="{{this.id}}"
+                  >
                     <img
                       class="w-[100px] h-[100px]"
                       src="{{this.img}}"
@@ -63,7 +74,8 @@
                 {{/each}}
               </div>
               <div>
-                <p>Сумма заказа: <span class="total-price">0</span></p>
+                <p>Сумма заказа:
+                  <span class="total-price">{{totalPrice}} ₽</span></p>
                 <router-link
                   href="${props.routes.room}"
                   class="text-white block p-1 rounded-lg w-full bg-orange-400 mt-30 text-center"

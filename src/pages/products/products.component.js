@@ -5,7 +5,7 @@ import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 import { useModal } from "../../hooks/useModal";
 import { useToastNotification } from "../../hooks/useToastNotification";
-// import { storageService } from "../../services/Storage";
+import { storageService } from "../../services/Storage";
 import { useCartStorage } from "../../hooks/useCartStorage";
 
 //Swiper-slider
@@ -15,7 +15,6 @@ import { register } from "swiper/element/bundle";
 register();
 
 import "./products.css";
-import { storageService } from "../../services/Storage";
 
 export class Products extends Component {
   constructor() {
@@ -27,10 +26,11 @@ export class Products extends Component {
 
     this.state = {
       error: "",
-      cartProduct: [],
+      cartProducts: [],
       products: [],
       isOpen: false,
       isLoading: false,
+      totalPrice: 0,
     };
   }
 
@@ -139,27 +139,50 @@ export class Products extends Component {
       let title = e.target.parentElement.parentElement.dataset.title;
       let img = e.target.parentElement.parentElement.dataset.img;
       let qty = e.target.parentElement.parentElement.dataset.qty;
-      const cartProduct = [{ id, price, title, img, qty }];
+      const cartItems = [{ id, price, title, img, qty }];
+      const { setItem, getAllItems } = useCartStorage();
       this.setState({
         ...this.state,
-        cartProduct: this.state.cartProduct.concat(cartProduct),
+        cartProducts: this.state.cartProducts.concat(cartItems),
+        totalPrice: this.getTotalPrice(cartItems),
       });
-    }
-  };
-  removeItemCard = (e, id) => {
-    if (e.target.closest(".delete-btn")) {
-      this.setState({
-        ...this.state,
-        cartProduct: this.state.cartProduct.filter((item) => {
-          return item.id != id;
-        }),
-      });
+      getAllItems();
+      setItem(id, cartItems);
     }
   };
 
-  // updateCart = () => {
-  //   this.calcSubtotalPrice();
-  // };
+  getTotalPrice(cartProducts) {
+    let totalPrice = 0;
+    cartProducts.map((item) => {
+      totalPrice += Number(item.price + totalPrice);
+    });
+
+    return totalPrice;
+  }
+  removeItemCard = ({ target }) => {
+    const cartBtnDelete = target.closest(".delete-btn");
+    if (cartBtnDelete) {
+      let id = target.parentElement.parentElement.dataset.id;
+      console.log(id);
+      const { removeItem, getAllItems } = useCartStorage();
+      removeItem(id);
+      const cartProducts = getAllItems();
+
+      this.setState({
+        ...this.state,
+        cartProducts,
+      });
+    }
+  };
+  initializationCart() {
+    const { getAllItems } = useCartStorage();
+    const cartProducts = getAllItems();
+    this.setState({
+      ...this.state,
+      cartProducts,
+      totalPrice: this.getTotalPrice(cartProducts),
+    });
+  }
 
   componentDidMount() {
     // this.timerID = setTimeout(this.openSuggestModal, 3000);
@@ -171,7 +194,7 @@ export class Products extends Component {
     this.addEventListener("click", this.openCart);
     this.addEventListener("click", this.closeCart);
     this.addEventListener("click", this.removeItemCard);
-    // this.updateCart();
+    this.initializationCart();
   }
 
   componentWillUnmount() {
@@ -183,7 +206,6 @@ export class Products extends Component {
     this.removeEventListener("click", this.openCart);
     this.removeEventListener("click", this.closeCart);
     this.removeEventListener("click", this.removeItemCard);
-    // this.updateCart();
     clearTimeout(this.timerID);
   }
 }
