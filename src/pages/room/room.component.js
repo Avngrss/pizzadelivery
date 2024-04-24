@@ -14,6 +14,7 @@ export class Room extends Component {
 
     this.state = {
       isLoading: false,
+      user: null,
     };
   }
 
@@ -50,8 +51,17 @@ export class Room extends Component {
     }
   };
 
+  initializationUser() {
+    const { getUser } = useUserStore();
+
+    this.setState({
+      user: getUser(),
+    });
+  }
+
   componentDidMount() {
     this.addEventListener("click", this.onClick);
+    this.initializationUser();
   }
 
   componentWillUnmount() {

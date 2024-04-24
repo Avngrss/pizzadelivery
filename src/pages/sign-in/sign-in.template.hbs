@@ -44,11 +44,6 @@
             ></router-link>
           </p>
 
-          {{!-- <form>
-            <input type="email">
-            <button type="submit">Send</button>
-          </form> --}}
-        
           <form class="flex flex-col gap-3 sign-in-form mt-12">
             <label>
               {{#if errors.email}}
@@ -83,11 +78,11 @@
               class-name="btn block w-full text-white"
             ></ui-button>
           </form>
-          <ui-button
-              class="btn-google"
-              caption="Google"
-              class-name="btn block w-full text-white mt-5"
-            ></ui-button>
+          {{! <ui-button
+            class="btn-google"
+            caption="Google"
+            class-name="btn block w-full text-white mt-5"
+          ></ui-button> }}
         </div>
       </div>
     </div>

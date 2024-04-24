@@ -44,63 +44,57 @@ export class SignIn extends Component {
   };
 
   signInUser = (e) => {
-    console.log('iuyuuyg');
-    // e.preventDefault();
-    // const { setUser } = useUserStore();
-    // const formData = extractFormData(e.target);
-    // this.toggleIsLoading();
-    // authService
-    //   .signIn(formData.email, formData.password)
-    //   .then((data) => {
-    //     setUser({ ...data.user });
-    //     useToastNotification({
-    //       message: "Успешный вход",
-    //       type: TOAST_TYPE.success,
-    //     });
-    //     useNavigate(ROUTES.products);
-    //   })
-    //   .catch(() => {
-    //     useToastNotification({ message: "Неправильный логин или пароль" });
-    //   })
-    //   .finally(() => {
-    //     this.toggleIsLoading();
-    //   });
-  };
-
-  signInGoogle = (e) => {
     e.preventDefault();
-    if(e.target.closest('.btn-google')) {
-      this.toggleIsLoading();
+    const { setUser } = useUserStore();
+    const formData = extractFormData(e.target);
+    console.log(formData);
+    this.toggleIsLoading();
     authService
-      .signInWitchGoogle()
-      .then(() => {
+      .signIn(formData.email, formData.password)
+      .then((data) => {
+        setUser({ ...data.user });
         useToastNotification({
           message: "Успешный вход",
           type: TOAST_TYPE.success,
         });
         useNavigate(ROUTES.products);
       })
+      .catch(() => {
+        useToastNotification({ message: "Неправильный логин или пароль" });
+      })
       .finally(() => {
         this.toggleIsLoading();
       });
-    }
-    
   };
 
-  componentDidMount() {
-    this.addEventListener('submit', this.signInUser)
-    this.addEventListener("click", this.signInGoogle);
-    // this.addEventListener("submit", this.signInUser);
+  // signInGoogle = (e) => {
+  //   e.preventDefault();
+  //   if (e.target.closest(".btn-google")) {
+  //     this.toggleIsLoading();
+  //     authService
+  //       .signInWitchGoogle()
+  //       .then(() => {
+  //         useToastNotification({
+  //           message: "Успешный вход",
+  //           type: TOAST_TYPE.success,
+  //         });
+  //         useNavigate(ROUTES.products);
+  //       })
+  //       .finally(() => {
+  //         this.toggleIsLoading();
+  //       });
+  //   }
+  // };
 
+  componentDidMount() {
+    this.addEventListener("submit", this.signInUser);
+    // this.addEventListener("click", this.signInGoogle);
     // this.addEventListener("change", this.validateField);
-    // this.addEventListener("click", this.logger);
   }
   componentWillUnmount() {
+    this.removeEventListener("submit", this.signInUser);
     // this.removeEventListener("click", this.signInGoogle);
-    // this.removeEventListener("submit", this.signInUser);
-
     // this.removeEventListener("change", this.validateField);
-    // this.removeEventListener("click", this.logger);
   }
 }
 

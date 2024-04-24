@@ -171,6 +171,7 @@ export class Products extends Component {
       this.setState({
         ...this.state,
         cartProducts,
+        totalPrice: this.getTotalPrice(cartProducts),
       });
     }
   };
