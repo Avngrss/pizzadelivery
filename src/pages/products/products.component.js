@@ -54,6 +54,7 @@ export class Products extends Component {
       .get("/products")
       .then(({ data }) => {
         this.setState({
+          ...this.state,
           products: mapResponseApiData(data),
         });
       })
@@ -136,19 +137,18 @@ export class Products extends Component {
       let title = e.target.parentElement.parentElement.dataset.title;
       let img = e.target.parentElement.parentElement.dataset.img;
       let qty = e.target.parentElement.parentElement.dataset.qty;
-      this.cartProduct = [{ id, price, title, img, qty }];
+     const cartProduct = [{ id, price, title, img, qty }];
       this.setState({
-        cartProduct: this.cartProduct.map((item) => {
-          storageService.setItem("products", item);
-          return item;
-        }),
+        ...this.state,
+        cartProduct: this.state.cartProduct.concat(cartProduct),
       });
     }
   };
   removeItemCard = (e) => {
     if (e.target.closest(".delete-btn")) {
       this.setState({
-        cartProduct: this.cartProduct.filter((item) => {
+        ...this.state,
+        cartProduct: this.state.cartProduct.filter((item) => {
           item.id != item.id;
           storageService.removeItem("products");
         }),
