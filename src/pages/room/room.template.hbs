@@ -4,8 +4,8 @@
     <ui-menu></ui-menu>
   </div>
   <div class="mt-4 animate-fade-left animate-duration-1000">
-    <div class="flex justify-between">
-      <div class="flex items-center flex-col">
+    <div class="flex gap-10">
+      <div class="flex items-center flex-col rounded-lg border border-gray-400 p-2 w-60">
         <h1 class="uppercase font-semibold text-center">Текущий профиль</h1>
         <div class="flex flex-col items-center">
           <a
@@ -13,21 +13,43 @@
             class="text-lg font-light mt-2 email text-gray-400"
           >{{user.email}}</a>
           <span>{{user.displayName}}</span>
-          <span>{{user.phoneNumber}}</span>
         </div>
       </div>
-      <div class="rounded-lg border border-gray-400 p-2 w-full">
+      <div class="rounded-lg border border-gray-400 p-2">
         <h2 class="uppercase font-semibold">Ваш заказ</h2>
         <h3>Товары</h3>
-        <div class="order-body">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Necessitatibus, eaque!
+        <div class="order-body mb-4">
+          {{#each cart}}
+            <div
+              class="flex items-center gap-5 relative mt-3"
+              data-id="{{this.id}}"
+            >
+              <div><img class="w-[100px] h-[100px]" src="{{this.img}}" alt="{{this.img}}" /></div>
+              <div class="flex flex-col justify-center items-center gap-3">
+                <div
+                  class="font-bold"
+                  data-id="{{this.id}}"
+                >{{this.title}}</div>
+                <strong>{{this.price}} ₽</strong>
+                <div class="flex items-center gap-5">
+                  <strong class="qty">{{qty}}</strong>
+                </div>
+              </div>
+            </div>
+          {{/each}}
         </div>
-        <ui-button
+        <div>
+          <ui-button
           class="order"
           caption="Заказать"
           class-name="text-white"
         ></ui-button>
+        <ui-button
+          class="clear mr-3"
+          caption="Очистить корзину"
+          class-name="text-white"
+        ></ui-button>
+        </div>
       </div>
     </div>
   </div>

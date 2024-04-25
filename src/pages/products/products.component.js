@@ -28,7 +28,7 @@ export class Products extends Component {
     this.state = {
       user: null,
       error: "",
-      cartProducts: [],
+      orderCart: [],
       products: [],
       isOpen: false,
       isLoading: false,
@@ -144,20 +144,27 @@ export class Products extends Component {
       }
     }
   };
-  openCart = (e) => {
-    const cartHid = this.querySelector(".cart-hid");
-    if (e.target.closest(".cart")) {
-      cartHid.classList.remove("hidden");
-      cartHid.classList.add("block");
-    }
-  };
-  closeCart = (e) => {
-    const cartHid = this.querySelector(".cart-hid");
-    if (e.target.closest(".drawer-reject-trigger")) {
-      cartHid.classList.remove("block");
-      cartHid.classList.add("hidden");
-    }
-  };
+  // openCart = (e) => {
+  //   const cartHid = this.querySelector(".cart-hid");
+  //   if (e.target.closest(".cart")) {
+  //     cartHid.classList.remove("hidden");
+  //     cartHid.classList.add("block");
+  //     apiServes.get('/order').then(({ data }) => {
+  //       this.setState({
+  //         ...this.state,
+  //         orderCart: mapResponseApiData(data),
+  //       });
+  //     })
+  //   }
+    
+  // };
+  // closeCart = (e) => {
+  //   const cartHid = this.querySelector(".cart-hid");
+  //   if (e.target.closest(".drawer-reject-trigger")) {
+  //     cartHid.classList.remove("block");
+  //     cartHid.classList.add("hidden");
+  //   }
+  // };
   addToCard = (e) => {
     if (e.target.closest(".add-to-cart")) {
       let id = e.target.dataset.id;
@@ -165,17 +172,17 @@ export class Products extends Component {
       let title = e.target.parentElement.parentElement.dataset.title;
       let img = e.target.parentElement.parentElement.dataset.img;
       let qty = e.target.parentElement.parentElement.dataset.qty;
-      const cartItems = [{ id, price, title, img, qty }];
-      const { setItem, getAllItems } = useCartStorage();
+      const cartItems = { id, price, title, img, qty };
+      apiServes.post('/order', cartItems)
+      // const { setItem, getAllItems } = useCartStorage();
       this.setState({
         ...this.state,
-        cartProducts: this.state.cartProducts.concat(cartItems),
-        totalPrice: this.getTotalPrice(cartItems),
+        orderCart: this.state.orderCart.concat(cartItems),
+        // totalPrice: this.getTotalPrice(cartItems),
       });
-      getAllItems();
-      setItem(id, cartItems);
-      text.classList.add("bg-green-300");
-      text.textContent = "В корзине";
+      
+      // getAllItems();
+      // setItem(id, cartItems);
     }
   };
   increaseCart(e) {
@@ -183,61 +190,60 @@ export class Products extends Component {
       console.log("click");
       let id = e.target.parentElement.parentElement.dataset.id;
       let qty = e.target.previousSibling.previousSibling;
-      const { setItem, getAllItems } = useCartStorage();
-      setItem(id, qty);
+      let cartItems = {id, qty};
+      // const { setItem, getAllItems } = useCartStorage();
+      apiServes.post('/order', cartItems)
+      // setItem(id, qty);
     }
   }
-  getTotalPrice(cartProducts) {
-    let totalPrice = 0;
-    cartProducts.map((item) => {
-      totalPrice = Number(item.price) + totalPrice;
-    });
+  // getTotalPrice(cartProducts) {
+  //   let totalPrice = 0;
+  //   orderCart.map((item) => {
+  //     totalPrice = Number(item.price) + totalPrice;
+  //   });
 
-    return totalPrice;
-  }
+  //   return totalPrice;
+  // }
   removeItemCard = ({ target }) => {
     const cartBtnDelete = target.closest(".delete-btn");
     if (cartBtnDelete) {
       let id = target.parentElement.parentElement.dataset.id;
-      console.log(id);
-      const { removeItem, getAllItems } = useCartStorage();
-      removeItem(id);
-      const cartProducts = getAllItems();
+
+      apiServes.delete('/order')
+      // const { removeItem, getAllItems } = useCartStorage();
+      // removeItem(id);
+      // const cartProducts = getAllItems();
 
       this.setState({
-        ...this.state,
-        cartProducts,
-        totalPrice: this.getTotalPrice(cartProducts),
+        ...this.state,     
+        // totalPrice: this.getTotalPrice(orderCart),
       });
     }
   };
   initializationCart() {
     const { getUser } = useUserStore();
-
-    const { getAllItems } = useCartStorage();
-    const cartProducts = getAllItems();
+    // const { getAllItems } = useCartStorage();
+    // const cartProducts = getAllItems();
     this.setState({
       ...this.state,
       user: getUser(),
-      cartProducts,
-      totalPrice: this.getTotalPrice(cartProducts),
+      // totalPrice: this.getTotalPrice(orderCart),
     });
   }
 
   componentDidMount() {
     // this.timerID = setTimeout(this.openSuggestModal, 3000);
-    this.timerCount = setTimeout(this.setTimer);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
     this.addEventListener("click", this.getAllProducts);
     this.addEventListener("click", this.addToCard);
-    this.addEventListener("click", this.openCart);
-    this.addEventListener("click", this.closeCart);
+    // this.addEventListener("click", this.openCart);
+    // this.addEventListener("click", this.closeCart);
     this.addEventListener("click", this.removeItemCard);
     this.addEventListener("click", this.increaseCart);
     this.initializationCart();
-    this.setTimer();
+    // this.setTimer();
   }
 
   componentWillUnmount() {
@@ -246,8 +252,7 @@ export class Products extends Component {
     this.getProducts();
     this.removeEventListener("click", this.getAllProducts);
     this.removeEventListener("click", this.addToCard);
-    this.removeEventListener("click", this.openCart);
-    this.removeEventListener("click", this.closeCart);
+    // this.removeEventListener("click", this.closeCart);
     this.removeEventListener("click", this.removeItemCard);
     clearTimeout(this.timerID);
   }

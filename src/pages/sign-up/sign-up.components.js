@@ -53,7 +53,7 @@ export class SignUp extends Component {
           message: "Успешная регистрация",
           type: TOAST_TYPE.success,
         });
-        useNavigate(ROUTES.cabinet);
+        useNavigate(ROUTES.products);
       })
       .catch(({ message }) => {
         useToastNotification({ message });

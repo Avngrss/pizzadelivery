@@ -9,6 +9,7 @@ import { useModal } from "../../hooks/useModal";
 import { extractFormData } from "../../utils/extractFormData";
 import { TOAST_TYPE } from "../../constants/toast";
 import { bot } from "../bot/bot";
+import { apiServes } from "../../services/Api";
 
 import "../../../style.css";
 
@@ -24,6 +25,7 @@ export class Menu extends Component {
       isOpen: false,
       isLoading: false,
       user: null,
+      orderCart: [],
     };
   }
 
@@ -63,6 +65,7 @@ export class Menu extends Component {
       successCaption: "Отправить",
       rejectCaption: "Отменить",
       title: "Заказать звонок",
+     
       onSuccess: (modal) => {
         const form = modal.querySelector(".call-form");
         const formData = extractFormData(form);
@@ -75,10 +78,29 @@ export class Menu extends Component {
       },
     });
   }
+  async openCartModal() {
+    useModal({
+      isOpen: true,
+      showBtn: true,
+      template: "ui-cart-form",
+      successCaption: "Заказать",
+      rejectCaption: "Закрыть",
+      title: "Корзина",
+      onSuccess: (modal) => {
+        const form = modal.querySelector(".call-form");
+        const formData = extractFormData(form);
+      },
+    });
+  }
+
+ 
 
   onClick = ({ target }) => {
     if (target.closest(".order-call")) {
       this.openCallModal();
+    }
+    if(target.closest('.cart')) {
+      this.openCartModal()
     }
   };
 
@@ -108,6 +130,7 @@ export class Menu extends Component {
     this.addEventListener("click", this.linkEmail);
     this.addEventListener("click", this.logoutBtn);
     this.addEventListener("click", this.onClick);
+    this.addEventListener('.click', this.deleteItem)
   }
 
   componentWillUnmount() {

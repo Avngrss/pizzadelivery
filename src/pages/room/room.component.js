@@ -5,6 +5,9 @@ import { useToastNotification } from "../../hooks/useToastNotification";
 import { extractFormData } from "../../utils/extractFormData";
 import { TOAST_TYPE } from "../../constants/toast";
 import { useUserStore } from "../../hooks/useStoreUser";
+import { storageService } from "../../services/Storage";
+import { apiServes } from "../../services/Api";
+import { mapResponseApiData } from "../../utils/api";
 
 export class Room extends Component {
   constructor() {
@@ -15,6 +18,7 @@ export class Room extends Component {
     this.state = {
       isLoading: false,
       user: null,
+      cart: [],
     };
   }
 
@@ -41,6 +45,9 @@ export class Room extends Component {
           message: "Ваше сообщение получено. В скором времени с вами свяжутся",
           type: TOAST_TYPE.success,
         });
+        // storageService.clear()
+        body.innerHTML = ''
+        apiServes.delete('/order')
       },
     });
   }
@@ -48,6 +55,11 @@ export class Room extends Component {
   onClick = ({ target }) => {
     if (target.closest(".order")) {
       this.openOrderModal();
+    }
+    if(target.closest('.clear')) {
+      const body = document.querySelector(".order-body");
+      storageService.clear()
+      body.innerHTML = ''
     }
   };
 
@@ -59,9 +71,23 @@ export class Room extends Component {
     });
   }
 
+  initializationOrder() {
+    // const {getAllItems} = useCartStorage();
+
+    this.setState({
+      cart: apiServes.get('/order').then(({ data }) => {
+        this.setState({
+          ...this.state,
+          cart: mapResponseApiData(data),
+        });
+      })
+    })
+  }
+
   componentDidMount() {
     this.addEventListener("click", this.onClick);
     this.initializationUser();
+    this.initializationOrder();
   }
 
   componentWillUnmount() {

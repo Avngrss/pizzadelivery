@@ -12,8 +12,13 @@ export class Modal extends Component {
     this.state = initialState;
   }
 
-  appendTemplate = (template) => {
+  appendTemplate = (template, data) => {
     const tmp = document.createElement(template);
+    if(data) {
+      Object.keys(data).forEach((key) => {
+        tmp.setAttribute(key, data[key])
+      })
+    }
     this.querySelector(".modal-body").append(tmp);
   };
 

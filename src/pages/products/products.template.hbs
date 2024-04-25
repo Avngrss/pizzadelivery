@@ -26,7 +26,7 @@
                   <img class="h-10 w-10" src="/cart.svg" alt="cart" />
                   <span
                     class="count-products rounded-full absolute -top-1 -right-2 h-6 w-6 text-center text-white bg-red-700"
-                  >{{cartProducts.length}}</span>
+                  >{{orderCart.length}}</span>
                 </div>
               </div>
               <button
@@ -41,7 +41,7 @@
               class="p-4 space-y-4 drawer-body h-screen overflow-auto pb-20 flex justify-between flex-col"
             >
               <div class="cart-items">
-                {{#each cartProducts}}
+                {{#each orderCart}}
                   <div
                     class="flex items-center gap-5 relative mt-3"
                     data-id="{{this.id}}"
