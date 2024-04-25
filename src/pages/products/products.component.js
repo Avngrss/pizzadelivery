@@ -23,6 +23,7 @@ export class Products extends Component {
       routes: ROUTES,
     });
     this.timerID = null;
+    this.timerCount = null;
 
     this.state = {
       user: null,
@@ -35,7 +36,25 @@ export class Products extends Component {
       qty: 1,
     };
   }
+  // setTimer() {
+  //   const target_mili_sec = new Date("May 10, 2024 14:30:0").getTime();
+  //   const timer = () => {
+  //     const now_mili_sec = new Date().getTime();
+  //     const remaining_sec = Math.floor((target_mili_sec - now_mili_sec) / 1000);
 
+  //     const day = Math.floor(remaining_sec / (3600 * 24));
+  //     const hour = Math.floor((remaining_sec % (3600 * 24)) / 3600);
+  //     const min = Math.floor((remaining_sec % 3600) / 60);
+  //     const sec = Math.floor(remaining_sec % 60);
+
+  //     this.querySelector("#day").innerHTML = day;
+  //     this.querySelector("#hour").innerHTML = hour;
+  //     this.querySelector("#min").innerHTML = min;
+  //     this.querySelector("#sec").innerHTML = sec;
+  //   };
+
+  //   setInterval(timer, 1000);
+  // }
   openSuggestModal() {
     useModal({
       isOpen: true,
@@ -63,6 +82,8 @@ export class Products extends Component {
         });
       })
       .catch(() => {
+        const products = this.querySelector(".products");
+        products.innerHTML = "Сервер не доступен";
         useToastNotification({ message: "Сервер не доступен" });
       })
       .finally(() => {
@@ -157,7 +178,6 @@ export class Products extends Component {
       text.textContent = "В корзине";
     }
   };
-
   increaseCart(e) {
     if (e.target.closest(".plus")) {
       console.log("click");
@@ -167,7 +187,6 @@ export class Products extends Component {
       setItem(id, qty);
     }
   }
-
   getTotalPrice(cartProducts) {
     let totalPrice = 0;
     cartProducts.map((item) => {
@@ -192,7 +211,6 @@ export class Products extends Component {
       });
     }
   };
-
   initializationCart() {
     const { getUser } = useUserStore();
 
@@ -208,6 +226,7 @@ export class Products extends Component {
 
   componentDidMount() {
     // this.timerID = setTimeout(this.openSuggestModal, 3000);
+    this.timerCount = setTimeout(this.setTimer);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
@@ -218,6 +237,7 @@ export class Products extends Component {
     this.addEventListener("click", this.removeItemCard);
     this.addEventListener("click", this.increaseCart);
     this.initializationCart();
+    this.setTimer();
   }
 
   componentWillUnmount() {
