@@ -9,23 +9,35 @@ export const useCartStorage = () => {
   const setItem = (id, data) => {
     const items = getAllItems().filter((item) => item.id != id);
     storageService.setItem(STORAGE_KEYS.cart, items.concat(data));
-    changeCartCount();
+    changePriceCount();
+    // changeCartCount();
   };
 
   const removeItem = (id) => {
     const items = getAllItems().filter((item) => item.id != id);
     storageService.setItem(STORAGE_KEYS.cart, items);
-    changeCartCount();
+    changePriceCount();
   };
 
-  const changeCartCount = () => {
+  const changePriceCount = () => {
     const cartElem = getAllItems();
     let totalPrice = 0;
-    cartElem.forEach(item => {
+    cartElem.forEach((item) => {
       totalPrice = Number(item.price) + totalPrice;
-    })
+    });
     document.querySelector(".total-price").innerHTML = totalPrice;
   };
+
+  // const changeCartCount = () => {
+  //   const cartElem = getAllItems();
+  //   let totalCount = 0;
+  //   cartElem.forEach((item) => {
+  //     totalCount = Number(item.qty) + totalCount;
+  //   });
+  //   document.querySelectorAll(".qty").forEach((item) => {
+  //     item.innerHTML = totalCount;
+  //   });
+  // };
 
   return {
     getAllItems,

@@ -1,10 +1,16 @@
-<label>
-  <p>{{label}}</p>
+<div class="form-item">
+  {{#if label}}
+    <p class="${(props.required) ? '_required' : ''}">{{label}}</p>
+  {{/if}}
+  {{#if error}}
+    <p class="text-red-500">{{error}}</p>
+  {{/if}}
   <input
     label="{{label}}"
-    name="{{name}}"
     type="{{type}}"
+    name="{{name}}"
     placeholder="{{placeholder}}"
     class="block w-full border-2 border-yellow-200 rounded {{className}}"
+    value="{{value}}"
   />
-</label>
+</div>

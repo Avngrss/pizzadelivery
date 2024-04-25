@@ -7,6 +7,8 @@ import { useToastNotification } from "../../hooks/useToastNotification";
 import { TOAST_TYPE } from "../../constants/toast";
 import { useNavigate } from "../../hooks/useNavigate";
 import { useUserStore } from "../../hooks/useStoreUser";
+import { validateIsNotEmptyFields } from "../../utils/validateIsNotEmptyFields";
+import { validatePasswordLength } from "../../utils/validatePasswordLength";
 
 export class SignUp extends Component {
   constructor() {
@@ -15,11 +17,17 @@ export class SignUp extends Component {
       routes: ROUTES,
     });
     this.state = {
-      errors: {
-        email: "",
-        password: "",
-        firstName: "",
-        lastName: "",
+      email: {
+        value: "",
+        error: "",
+      },
+      password: {
+        value: "",
+        error: "",
+      },
+      name: {
+        value: "",
+        error: "",
       },
       isLoading: false,
     };
@@ -32,50 +40,64 @@ export class SignUp extends Component {
     });
   };
 
-  registerUser = (evt) => {
-    evt.preventDefault();
-    const { email, password, ...rest } = extractFormData(evt.target);
+  signUpUser = (formData) => {
     this.toggleIsLoading();
+
     const { setUser } = useUserStore();
+
     authService
-      .signUp(email, password)
-      .then(() => {
-        authService.updateUserProfile(rest).then(() => {
-          setUser({ ...authService.getCurrentUser() });
-          useToastNotification({
-            message: "Успешный вход",
-            type: TOAST_TYPE.success,
-          });
-          useNavigate(ROUTES.products);
+      .signUp(formData.email, formData.password)
+      .then((data) => {
+        setUser({ ...data.user });
+        useToastNotification({
+          message: "Успешная регистрация",
+          type: TOAST_TYPE.success,
         });
+        useNavigate(ROUTES.cabinet);
       })
-      .catch(() => {
-        useToastNotification({ message: "Пожалуйста, заполните все поля" });
+      .catch(({ message }) => {
+        useToastNotification({ message });
       })
       .finally(() => {
         this.toggleIsLoading();
       });
   };
 
-  validateField = ({ target }) => {
-    if (target.value === "") {
-      this.setState({
-        ...this.state,
-        errors: {
-          ...this.state.errors,
-          [target.name]: "empty",
-        },
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = extractFormData(e.target);
+    const validationRules = [validateIsNotEmptyFields, validatePasswordLength];
+
+    this.state.isValidateError = false;
+
+    for (const rule of validationRules) {
+      if (this.state.isValidateError) break;
+      rule(formData, (key, value, error) => {
+        this.setState(
+          Object.assign(this.state, {
+            inputs: {
+              ...this.state.inputs,
+              [key]: {
+                value: value,
+                error: error,
+              },
+            },
+          })
+        );
+        if (error) this.state.isValidateError = true;
       });
     }
+
+    if (!this.state.isValidateError) this.signUpUser(formData);
   };
 
   componentDidMount() {
-    this.addEventListener("submit", this.registerUser);
-    this.addEventListener("change", this.validateField);
+    this.addEventListener("submit", this.onSubmit);
   }
+
   componentWillUnmount() {
-    this.removeEventListener("submit", this.registerUser);
-    this.removeEventListener("change", this.validateField);
+    this.removeEventListener("submit", this.onSubmit);
   }
 }
 

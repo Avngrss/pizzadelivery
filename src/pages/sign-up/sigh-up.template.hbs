@@ -49,20 +49,19 @@
                 label="Ваш email"
                 name="email"
                 type="email"
+                required="true"
+                error="{{inputs.email.error}}"
+                value="{{inputs.email.value}}"
                 class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
               ></ui-input>
               <ui-input
                 class="text-orange-500"
                 label="Ваше имя"
                 type="text"
+                required="true"
                 name="displayName"
-                class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-              ></ui-input>
-              <ui-input
-                class="text-orange-500"
-                label="Ваш телефон"
-                type="tel"
-                name="phoneNumber"
+                error="{{inputs.name.error}}"
+                value="{{inputs.name.value}}"
                 class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
               ></ui-input>
               <ui-input
@@ -70,6 +69,9 @@
                 label="Пароль"
                 type="password"
                 name="password"
+                required="true"
+                error="{{inputs.password.error}}"
+                value="{{inputs.password.value}}"
                 class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
               ></ui-input>
               <ui-input
@@ -77,6 +79,8 @@
                 label="Подтвердить пароль"
                 type="password"
                 name="password"
+                error="{{inputs.password.error}}"
+                value="{{inputs.password.value}}"
                 class-name="p-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
               ></ui-input>
               <ui-button

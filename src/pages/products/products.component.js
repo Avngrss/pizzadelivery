@@ -5,8 +5,8 @@ import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 import { useModal } from "../../hooks/useModal";
 import { useToastNotification } from "../../hooks/useToastNotification";
-import { storageService } from "../../services/Storage";
 import { useCartStorage } from "../../hooks/useCartStorage";
+import { useUserStore } from "../../hooks/useStoreUser";
 
 //Swiper-slider
 // import function to register Swiper custom elements
@@ -25,12 +25,14 @@ export class Products extends Component {
     this.timerID = null;
 
     this.state = {
+      user: null,
       error: "",
       cartProducts: [],
       products: [],
       isOpen: false,
       isLoading: false,
       totalPrice: 0,
+      qty: 1,
     };
   }
 
@@ -62,6 +64,9 @@ export class Products extends Component {
       })
       .catch(() => {
         useToastNotification({ message: "Сервер не доступен" });
+      })
+      .finally(() => {
+        this.toggleIsLoading();
       });
   };
   filterProducts = (e) => {
@@ -148,8 +153,20 @@ export class Products extends Component {
       });
       getAllItems();
       setItem(id, cartItems);
+      text.classList.add("bg-green-300");
+      text.textContent = "В корзине";
     }
   };
+
+  increaseCart(e) {
+    if (e.target.closest(".plus")) {
+      console.log("click");
+      let id = e.target.parentElement.parentElement.dataset.id;
+      let qty = e.target.previousSibling.previousSibling;
+      const { setItem, getAllItems } = useCartStorage();
+      setItem(id, qty);
+    }
+  }
 
   getTotalPrice(cartProducts) {
     let totalPrice = 0;
@@ -175,18 +192,22 @@ export class Products extends Component {
       });
     }
   };
+
   initializationCart() {
+    const { getUser } = useUserStore();
+
     const { getAllItems } = useCartStorage();
     const cartProducts = getAllItems();
     this.setState({
       ...this.state,
+      user: getUser(),
       cartProducts,
       totalPrice: this.getTotalPrice(cartProducts),
     });
   }
 
   componentDidMount() {
-    this.timerID = setTimeout(this.openSuggestModal, 3000);
+    // this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
@@ -195,6 +216,7 @@ export class Products extends Component {
     this.addEventListener("click", this.openCart);
     this.addEventListener("click", this.closeCart);
     this.addEventListener("click", this.removeItemCard);
+    this.addEventListener("click", this.increaseCart);
     this.initializationCart();
   }
 

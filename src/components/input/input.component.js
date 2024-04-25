@@ -4,7 +4,11 @@ import template from "./input.template.hbs";
 export class Input extends Component {
   constructor() {
     super();
-    this.template = template();
+    this.template = template({
+      required: this.getAttribute("required")
+        ? JSON.parse(this.getAttribute("required"))
+        : "",
+    });
 
     this.state = {
       label: this.getAttribute("label") ?? "",
@@ -13,6 +17,8 @@ export class Input extends Component {
       placeholder: this.getAttribute("placeholder") ?? "",
       className: this.getAttribute("class-name"),
       required: this.getAttribute("required"),
+      value: this.getAttribute("value") ?? "",
+      error: this.getAttribute("error"),
     };
   }
 }
