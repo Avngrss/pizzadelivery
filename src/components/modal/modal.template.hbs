@@ -28,16 +28,30 @@
         <div
           class="flex flex-col gap-3 items-center p-4 border-gray-200 rounded-b"
         >
-          <div class="w-full">
-            <button
-              class="w-full uppercase modal-success text-white bg-orange-400 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >{{successCaption}}</button>
-          </div>
+          {{#if successBtn}}
+            <div class="w-full">
+              <button
+                class="w-full uppercase modal-success text-white bg-orange-400 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              >{{successCaption}}</button>
+            </div>
+          {{/if}}
           {{#if showBtn}}
             <div class="w-full">
               <button
                 class="w-full uppercase modal-close py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-orange-800 rounded-lg border border-gray-200 hover:bg-orange-600"
               >{{rejectCaption}}</button>
+            </div>
+          {{/if}}
+          {{#if orderBtn}}
+            <div class="w-full">
+              <button
+                class="w-full uppercase modal-close py-2.5 px-5 text-sm font-medium text-white focus:outline-none bg-orange-800 rounded-lg border border-gray-200 hover:bg-orange-600"
+              >
+                <router-link
+                  href="${props.routes.room}"
+                  class="text-white block p-1 rounded-lg hover:hover:scale-110 ease-in duration-300"
+                  label="Заказать"
+                ></router-link></button>
             </div>
           {{/if}}
         </div>

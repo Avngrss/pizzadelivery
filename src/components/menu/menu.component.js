@@ -10,6 +10,7 @@ import { extractFormData } from "../../utils/extractFormData";
 import { TOAST_TYPE } from "../../constants/toast";
 import { bot } from "../bot/bot";
 import { apiServes } from "../../services/Api";
+import { mapResponseApiData } from "../../utils/api";
 
 import "../../../style.css";
 
@@ -26,6 +27,16 @@ export class Menu extends Component {
       isLoading: false,
       user: null,
       orderCart: [],
+      inputs: {
+        name: {
+          value: "",
+          error: "",
+        },
+        phone: {
+          value: "",
+          error: "",
+        },
+      },
     };
   }
 
@@ -62,10 +73,10 @@ export class Menu extends Component {
       isOpen: true,
       showBtn: true,
       template: "ui-call-form",
-      successCaption: "Отправить",
+      successBtn: true,
+      successCaption: "Заказать звонок",
       rejectCaption: "Отменить",
       title: "Заказать звонок",
-     
       onSuccess: (modal) => {
         const form = modal.querySelector(".call-form");
         const formData = extractFormData(form);
@@ -81,26 +92,21 @@ export class Menu extends Component {
   async openCartModal() {
     useModal({
       isOpen: true,
-      showBtn: true,
       template: "ui-cart-form",
-      successCaption: "Заказать",
-      rejectCaption: "Закрыть",
+      orderBtn: "Заказать",
       title: "Корзина",
       onSuccess: (modal) => {
-        const form = modal.querySelector(".call-form");
-        const formData = extractFormData(form);
+        console.log(modal);
       },
     });
   }
-
- 
 
   onClick = ({ target }) => {
     if (target.closest(".order-call")) {
       this.openCallModal();
     }
-    if(target.closest('.cart')) {
-      this.openCartModal()
+    if (target.closest(".cart")) {
+      this.openCartModal();
     }
   };
 
@@ -125,12 +131,23 @@ export class Menu extends Component {
     });
   }
 
+  async init() {
+    try {
+      const { data } = await apiServes.get("/order");
+      this.setState({
+        orderCart: mapResponseApiData(data),
+      });
+    } catch ({ message }) {
+      useToastNotification({ message });
+    }
+  }
+
   componentDidMount() {
     this.setUser();
+    this.init();
     this.addEventListener("click", this.linkEmail);
     this.addEventListener("click", this.logoutBtn);
     this.addEventListener("click", this.onClick);
-    this.addEventListener('.click', this.deleteItem)
   }
 
   componentWillUnmount() {

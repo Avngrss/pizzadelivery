@@ -33,34 +33,34 @@ export class Products extends Component {
       isOpen: false,
       isLoading: false,
       totalPrice: 0,
-      qty: 1,
     };
   }
-  // setTimer() {
-  //   const target_mili_sec = new Date("May 10, 2024 14:30:0").getTime();
-  //   const timer = () => {
-  //     const now_mili_sec = new Date().getTime();
-  //     const remaining_sec = Math.floor((target_mili_sec - now_mili_sec) / 1000);
+  setTimer() {
+    const target_mili_sec = new Date("May 10, 2024 14:30:0").getTime();
+    const timer = () => {
+      const now_mili_sec = new Date().getTime();
+      const remaining_sec = Math.floor((target_mili_sec - now_mili_sec) / 1000);
 
-  //     const day = Math.floor(remaining_sec / (3600 * 24));
-  //     const hour = Math.floor((remaining_sec % (3600 * 24)) / 3600);
-  //     const min = Math.floor((remaining_sec % 3600) / 60);
-  //     const sec = Math.floor(remaining_sec % 60);
+      const day = Math.floor(remaining_sec / (3600 * 24));
+      const hour = Math.floor((remaining_sec % (3600 * 24)) / 3600);
+      const min = Math.floor((remaining_sec % 3600) / 60);
+      const sec = Math.floor(remaining_sec % 60);
 
-  //     this.querySelector("#day").innerHTML = day;
-  //     this.querySelector("#hour").innerHTML = hour;
-  //     this.querySelector("#min").innerHTML = min;
-  //     this.querySelector("#sec").innerHTML = sec;
-  //   };
+      this.querySelector("#day").innerHTML = day;
+      this.querySelector("#hour").innerHTML = hour;
+      this.querySelector("#min").innerHTML = min;
+      this.querySelector("#sec").innerHTML = sec;
+    };
 
-  //   setInterval(timer, 1000);
-  // }
+    setInterval(timer, 1000);
+  }
   openSuggestModal() {
     useModal({
       isOpen: true,
       template: "ui-suggest-modal",
       title: "Новинка!",
       successCaption: "Спешу попробовать!",
+      successBtn: true,
       className: "min-w-80",
       onSuccess() {},
     });
@@ -144,27 +144,6 @@ export class Products extends Component {
       }
     }
   };
-  // openCart = (e) => {
-  //   const cartHid = this.querySelector(".cart-hid");
-  //   if (e.target.closest(".cart")) {
-  //     cartHid.classList.remove("hidden");
-  //     cartHid.classList.add("block");
-  //     apiServes.get('/order').then(({ data }) => {
-  //       this.setState({
-  //         ...this.state,
-  //         orderCart: mapResponseApiData(data),
-  //       });
-  //     })
-  //   }
-    
-  // };
-  // closeCart = (e) => {
-  //   const cartHid = this.querySelector(".cart-hid");
-  //   if (e.target.closest(".drawer-reject-trigger")) {
-  //     cartHid.classList.remove("block");
-  //     cartHid.classList.add("hidden");
-  //   }
-  // };
   addToCard = (e) => {
     if (e.target.closest(".add-to-cart")) {
       let id = e.target.dataset.id;
@@ -173,77 +152,31 @@ export class Products extends Component {
       let img = e.target.parentElement.parentElement.dataset.img;
       let qty = e.target.parentElement.parentElement.dataset.qty;
       const cartItems = { id, price, title, img, qty };
-      apiServes.post('/order', cartItems)
-      // const { setItem, getAllItems } = useCartStorage();
+      apiServes.post("/order", cartItems);
       this.setState({
         ...this.state,
         orderCart: this.state.orderCart.concat(cartItems),
-        // totalPrice: this.getTotalPrice(cartItems),
-      });
-      
-      // getAllItems();
-      // setItem(id, cartItems);
-    }
-  };
-  increaseCart(e) {
-    if (e.target.closest(".plus")) {
-      console.log("click");
-      let id = e.target.parentElement.parentElement.dataset.id;
-      let qty = e.target.previousSibling.previousSibling;
-      let cartItems = {id, qty};
-      // const { setItem, getAllItems } = useCartStorage();
-      apiServes.post('/order', cartItems)
-      // setItem(id, qty);
-    }
-  }
-  // getTotalPrice(cartProducts) {
-  //   let totalPrice = 0;
-  //   orderCart.map((item) => {
-  //     totalPrice = Number(item.price) + totalPrice;
-  //   });
-
-  //   return totalPrice;
-  // }
-  removeItemCard = ({ target }) => {
-    const cartBtnDelete = target.closest(".delete-btn");
-    if (cartBtnDelete) {
-      let id = target.parentElement.parentElement.dataset.id;
-
-      apiServes.delete('/order')
-      // const { removeItem, getAllItems } = useCartStorage();
-      // removeItem(id);
-      // const cartProducts = getAllItems();
-
-      this.setState({
-        ...this.state,     
-        // totalPrice: this.getTotalPrice(orderCart),
       });
     }
   };
+
   initializationCart() {
     const { getUser } = useUserStore();
-    // const { getAllItems } = useCartStorage();
-    // const cartProducts = getAllItems();
     this.setState({
       ...this.state,
       user: getUser(),
-      // totalPrice: this.getTotalPrice(orderCart),
     });
   }
 
   componentDidMount() {
-    // this.timerID = setTimeout(this.openSuggestModal, 3000);
+    this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
     this.addEventListener("click", this.getAllProducts);
     this.addEventListener("click", this.addToCard);
-    // this.addEventListener("click", this.openCart);
-    // this.addEventListener("click", this.closeCart);
-    this.addEventListener("click", this.removeItemCard);
-    this.addEventListener("click", this.increaseCart);
     this.initializationCart();
-    // this.setTimer();
+    this.setTimer();
   }
 
   componentWillUnmount() {
@@ -252,9 +185,8 @@ export class Products extends Component {
     this.getProducts();
     this.removeEventListener("click", this.getAllProducts);
     this.removeEventListener("click", this.addToCard);
-    // this.removeEventListener("click", this.closeCart);
-    this.removeEventListener("click", this.removeItemCard);
     clearTimeout(this.timerID);
+    clearTimeout(this.timerCount);
   }
 }
 

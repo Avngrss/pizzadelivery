@@ -11,7 +11,6 @@ import "./core/Router";
 import "./pages/products/products.component";
 import "./pages/home/home.component";
 import "./pages/not-found/not-found.component";
-import "./pages/cart/cart.component";
 import "./pages/contacts/contacts.component";
 import "./pages/sign-in/sign-in.component";
 import "./pages/sign-up/sign-up.components";
@@ -28,7 +27,7 @@ import "./components/modal/modal.component";
 import "./components/call-form/call-form.component";
 import "./components/suggest-modal/suggest-modal.component";
 import "./components/order-form/order-form.component";
-import './components/cart-modal/cart-modal.component';
+import "./components/cart-modal/cart-modal.component";
 
 export class App extends Component {
   constructor() {

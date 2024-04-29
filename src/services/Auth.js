@@ -38,6 +38,7 @@ export class AuthService {
   }
 
   updateUserProfile(data) {
+    console.log(data);
     return updateProfile(this._auth.currentUser, data);
   }
 

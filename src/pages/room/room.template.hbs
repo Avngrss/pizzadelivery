@@ -3,9 +3,11 @@
   <div>
     <ui-menu></ui-menu>
   </div>
-  <div class="mt-4 animate-fade-left animate-duration-1000">
+  <main class="mt-4 animate-fade-left animate-duration-1000">
     <div class="flex gap-10">
-      <div class="flex items-center flex-col rounded-lg border border-gray-400 p-2 w-60">
+      <div
+        class="flex items-center flex-col rounded-lg border border-gray-400 p-2 w-60"
+      >
         <h1 class="uppercase font-semibold text-center">Текущий профиль</h1>
         <div class="flex flex-col items-center">
           <a
@@ -15,16 +17,20 @@
           <span>{{user.displayName}}</span>
         </div>
       </div>
-      <div class="rounded-lg border border-gray-400 p-2">
+      <div class="p-2">
         <h2 class="uppercase font-semibold">Ваш заказ</h2>
         <h3>Товары</h3>
-        <div class="order-body mb-4">
+        <div class="order-body mb-4 grid grid-cols-4">
           {{#each cart}}
             <div
               class="flex items-center gap-5 relative mt-3"
               data-id="{{this.id}}"
             >
-              <div><img class="w-[100px] h-[100px]" src="{{this.img}}" alt="{{this.img}}" /></div>
+              <div><img
+                  class="w-[100px] h-[100px]"
+                  src="{{this.img}}"
+                  alt="{{this.img}}"
+                /></div>
               <div class="flex flex-col justify-center items-center gap-3">
                 <div
                   class="font-bold"
@@ -32,7 +38,7 @@
                 >{{this.title}}</div>
                 <strong>{{this.price}} ₽</strong>
                 <div class="flex items-center gap-5">
-                  <strong class="qty">{{qty}}</strong>
+                  <strong class="qty">{{this.qty}}</strong>
                 </div>
               </div>
             </div>
@@ -40,18 +46,18 @@
         </div>
         <div>
           <ui-button
-          class="order"
-          caption="Заказать"
-          class-name="text-white"
-        ></ui-button>
-        <ui-button
-          class="clear mr-3"
-          caption="Очистить корзину"
-          class-name="text-white"
-        ></ui-button>
+            class="order"
+            caption="Заказать"
+            class-name="text-white"
+          ></ui-button>
+          <ui-button
+            class="clear mr-3"
+            caption="Очистить корзину"
+            class-name="text-white"
+          ></ui-button>
         </div>
       </div>
     </div>
-  </div>
+  </main>
   <ui-footer></ui-footer>
 </div>

@@ -52,7 +52,6 @@
           class="text-lg font-light mt-2 email text-yellow-100"
         >{{user.email}}</a>
         <span>{{user.displayName}}</span>
-        <span>{{user.phoneNumber}}</span>
         <span class="logout-btn cursor-pointer text-yellow-100">Выйти</span>
       </div>
     </div>
@@ -60,6 +59,9 @@
     <div class="relative">
       <div class="relative cursor-pointer cart">
         <img class="h-10 w-10" src="/cart.svg" alt="cart" />
+        <span
+          class="absolute -right-2 -top-2 text-white h-6 w-6 text-center -bottom-4 rounded-full bg-red-500 block"
+        >{{orderCart.length}}</span>
       </div>
     </div>
   </div>

@@ -3,21 +3,24 @@ import template from "./modal.template.hbs";
 import { eventEmitter } from "../../core/EventEmitter";
 import { EVENT_TYPES } from "../../constants/eventTypes";
 import { initialState } from "./initialState";
+import { ROUTES } from "../../constants/routes";
 
 export class Modal extends Component {
   constructor() {
     super();
-    this.template = template({});
+    this.template = template({
+      routes: ROUTES,
+    });
 
     this.state = initialState;
   }
 
   appendTemplate = (template, data) => {
     const tmp = document.createElement(template);
-    if(data) {
+    if (data) {
       Object.keys(data).forEach((key) => {
-        tmp.setAttribute(key, data[key])
-      })
+        tmp.setAttribute(key, data[key]);
+      });
     }
     this.querySelector(".modal-body").append(tmp);
   };

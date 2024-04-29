@@ -40,64 +40,39 @@ export class SignUp extends Component {
     });
   };
 
-  signUpUser = (formData) => {
+  signUpUser = (e) => {
+    const { email, password, ...rest } = extractFormData(e.target);
     this.toggleIsLoading();
-
     const { setUser } = useUserStore();
-
     authService
-      .signUp(formData.email, formData.password)
-      .then((data) => {
-        setUser({ ...data.user });
-        useToastNotification({
-          message: "Успешная регистрация",
-          type: TOAST_TYPE.success,
+      .signUp(email, password)
+      .then(() => {
+        authService.updateUserProfile(rest).then(() => {
+          setUser({ ...authService.getCurrentUser() });
+          useToastNotification({
+            message: "Успешная регистрация",
+            type: TOAST_TYPE.success,
+          });
+          useNavigate(ROUTES.products);
         });
-        useNavigate(ROUTES.products);
       })
-      .catch(({ message }) => {
-        useToastNotification({ message });
+      .catch(() => {
+        useToastNotification({
+          message: "Неправильный логин или пароль",
+          type: TOAST_TYPE.error,
+        });
       })
       .finally(() => {
         this.toggleIsLoading();
       });
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-
-    const formData = extractFormData(e.target);
-    const validationRules = [validateIsNotEmptyFields, validatePasswordLength];
-
-    this.state.isValidateError = false;
-
-    for (const rule of validationRules) {
-      if (this.state.isValidateError) break;
-      rule(formData, (key, value, error) => {
-        this.setState(
-          Object.assign(this.state, {
-            inputs: {
-              ...this.state.inputs,
-              [key]: {
-                value: value,
-                error: error,
-              },
-            },
-          })
-        );
-        if (error) this.state.isValidateError = true;
-      });
-    }
-
-    if (!this.state.isValidateError) this.signUpUser(formData);
-  };
-
   componentDidMount() {
-    this.addEventListener("submit", this.onSubmit);
+    this.addEventListener("submit", this.signUpUser);
   }
 
   componentWillUnmount() {
-    this.removeEventListener("submit", this.onSubmit);
+    this.removeEventListener("submit", this.signUpUser);
   }
 }
 

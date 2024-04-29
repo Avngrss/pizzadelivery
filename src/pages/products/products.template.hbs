@@ -6,88 +6,8 @@
     ></ui-loader>
     <div>
       <ui-menu class="relative"></ui-menu>
-      <div
-        class="fixed hidden cart-hid top-0 right-0 bottom-0 z-50 bg-black/[0.5]"
-      >
-        <div class="w-[400px] h-full">
-          <!-- Drawer content -->
-          <div
-            class="bg-white shadow animate-fade-left animate-duration-500 pb-5"
-          >
-            <!-- Drawer header -->
-            <div
-              class="flex items-center justify-between p-4 border-b rounded-t"
-            >
-              <h3 class="text-xl font-semibold text-gray-900">
-                Корзина
-              </h3>
-              <div class="relative">
-                <div class="relative cart">
-                  <img class="h-10 w-10" src="/cart.svg" alt="cart" />
-                  <span
-                    class="count-products rounded-full absolute -top-1 -right-2 h-6 w-6 text-center text-white bg-red-700"
-                  >{{orderCart.length}}</span>
-                </div>
-              </div>
-              <button
-                type="button"
-                class="drawer-reject-trigger text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg w-8 h-8 ms-auto inline-flex justify-center items-center"
-                data-modal-hide="default-modal"
-              >
-                <div class="icon-x-circle text-orange-300">X</div>
-              </button>
-            </div>
-            <div
-              class="p-4 space-y-4 drawer-body h-screen overflow-auto pb-20 flex justify-between flex-col"
-            >
-              <div class="cart-items">
-                {{#each orderCart}}
-                  <div
-                    class="flex items-center gap-5 relative mt-3"
-                    data-id="{{this.id}}"
-                  >
-                    <img
-                      class="w-[100px] h-[100px]"
-                      src="{{this.img}}"
-                      alt=""
-                    />
-                    <div class="flex flex-col items-center gap-3">
-                      <div
-                        class="font-bold"
-                        data-id="{{this.id}}"
-                      >{{this.title}}</div>
-                      <strong>{{this.price}} ₽</strong>
-                      <div class="flex items-center gap-5">
-                        <span
-                          class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer minus"
-                        >-</span>
-                        <strong class="qty">{{qty}}</strong>
-                        <span
-                          class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer plus"
-                        >+</span>
-                      </div>
-                    </div>
-                    <div
-                      class="absolute top-0 right-0 cursor-pointer bg-orange-200 p-1 rounded-full"
-                    ><span class="delete-btn">&times;</span></div>
-                  </div>
-                {{/each}}
-              </div>
-              <div>
-                <p>Сумма заказа:
-                  <span class="total-price">{{totalPrice}} ₽</span></p>
-                <router-link
-                  href="${props.routes.room}"
-                  class="text-white block p-1 rounded-lg w-full bg-orange-400 mt-30 text-center"
-                  label="Заказать"
-                ></router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="animate-fade-left animate-duration-1000">
+    <section class="animate-fade-left animate-duration-1000">
       <div class="mt-6">
         <swiper-container
           class="mt-4"
@@ -123,26 +43,46 @@
             /></swiper-slide>
         </swiper-container>
       </div>
-      {{! <div>
-        <div class="timer">
-          <div class="sub_timer">
-            <h1 id="day" class="digit">00</h1>
-            <p class="digit_name">Дней</p>
+      <section>
+        <div
+          class="timer flex items-center gap-5 text-center justify-between mt-4 bg-workspace bg-cover p-28"
+        >
+          <div
+            class="flex items-center gap-5 text-center mt-4 border-2 border-orange-400 rounded-lg p-4 text-white"
+          >
+            <div class="sub_timer">
+              <h1 id="day" class="text-8xl">00</h1>
+              <p class="digit_name">Дней</p>
+            </div>
+            <div class="sub_timer">
+              <h1 id="hour" class="text-6xl">00</h1>
+              <p class="digit_name">Часов</p>
+            </div>
+            <div class="sub_timer">
+              <h1 id="min" class="text-5xl">00</h1>
+              <p class="digit_name">Минуты</p>
+            </div>
+            <div class="sub_timer">
+              <h1 id="sec" class="text-5xl">00</h1>
+              <p class="digit_name">Секунды</p>
+            </div>
           </div>
-          <div class="sub_timer">
-            <h1 id="hour" class="digit">00</h1>
-            <p class="digit_name">Часов</p>
-          </div>
-          <div class="sub_timer">
-            <h1 id="min" class="digit">00</h1>
-            <p class="digit_name">Минуты</p>
-          </div>
-          <div class="sub_timer">
-            <h1 id="sec" class="digit">00</h1>
-            <p class="digit_name">Секунды</p>
+          <div>
+            <h1 class="text-4xl text-white">
+              Акция «3 пиццы на традиционном тесте за 1249 р»
+            </h1>
+            <p class="text-orange-900 mt-5">В рамках акции вы можете выбрать
+              любые 3 пиццы на традиционном тесте. Одна пицца может быть выбрана
+              несколько раз. На данное предложение не распространяется действие
+              купона «Графский фунт». Данная акция может быть продублирована в
+              одном заказе бесконечное количество раз. Чтобы воспользоваться
+              предложением, добавьте в корзину выбранные пиццы и при оформлении
+              заказа нажмите на подсказку с названием акции, цена будет
+              изменена.</p>
           </div>
         </div>
-      </div> }}
+
+      </section>
       <div class="mt-8">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-5">
@@ -223,9 +163,7 @@
           {{/each}}
         </div>
       </div>
-    </div>
+    </section>
   </main>
-  <div class="cart-items">
-  </div>
   <ui-footer></ui-footer>
 </div>
