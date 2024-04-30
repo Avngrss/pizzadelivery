@@ -23,13 +23,9 @@ export class OrderForm extends Component {
     const cartBtnDelete = target.closest(".delete-btn");
     if (cartBtnDelete) {
       let id = target.parentElement.parentElement.dataset.id;
-      apiServes.delete("/order", { id }).then(() => {
-        apiServes.get("/order").then(({ data }) => {
-          this.setState({
-            data: data,
-            totalPrice: this.getPrice(this.state.data),
-          });
-        });
+      this.setState({
+        ...this.state,
+        data: this.state.data.filter((item) => item.id != id),
       });
     }
   };
