@@ -5,7 +5,6 @@ import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 import { useModal } from "../../hooks/useModal";
 import { useToastNotification } from "../../hooks/useToastNotification";
-import { useCartStorage } from "../../hooks/useCartStorage";
 import { useUserStore } from "../../hooks/useStoreUser";
 
 //Swiper-slider
@@ -152,30 +151,24 @@ export class Products extends Component {
       let img = e.target.parentElement.parentElement.dataset.img;
       let qty = e.target.parentElement.parentElement.dataset.qty;
       const cartItems = { id, price, title, img, qty };
-      apiServes.post("/order", cartItems);
-      this.setState({
-        ...this.state,
-        orderCart: this.state.orderCart.concat(cartItems),
-      });
+      const { getUser } = useUserStore();
+      apiServes.post("/order", cartItems).then(() => {
+        this.setState({
+          ...this.state,
+          orderCart: this.state.orderCart.concat(cartItems),
+          user: getUser()
+        });
+      })
     }
   };
 
-  initializationCart() {
-    const { getUser } = useUserStore();
-    this.setState({
-      ...this.state,
-      user: getUser(),
-    });
-  }
-
   componentDidMount() {
-    this.timerID = setTimeout(this.openSuggestModal, 3000);
+    // this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
     this.addEventListener("click", this.getAllProducts);
     this.addEventListener("click", this.addToCard);
-    this.initializationCart();
     this.setTimer();
   }
 

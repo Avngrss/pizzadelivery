@@ -18,80 +18,66 @@ export class OrderForm extends Component {
       totalPrice: 0,
     };
   }
-
-  deleteItem = ({ target }) => {
+  getTotalPrice(arr) {
+    return arr.reduce((prev, current) => (prev += Number(current.price) * current.qty), 0);
+  }
+  deleteItem = async ({ target }) => {
     const cartBtnDelete = target.closest(".delete-btn");
     if (cartBtnDelete) {
       let id = target.parentElement.parentElement.dataset.id;
+      await apiServes.delete(`/order/${id}`);
+      const { data } = await apiServes.get("/order");
+      const result = mapResponseApiData(data ?? {});
       this.setState({
         ...this.state,
-        data: this.state.data.filter((item) => item.id != id),
+        data: result,
+        totalPrice: this.getTotalPrice(result),
       });
     }
   };
-
-  increaseItem = ({ target }) => {
+  increaseItem = async ({ target }) => {
     if (target.closest(".plus")) {
       let id = target.parentElement.parentElement.dataset.id;
+      const item = this.state.data.find((item) => item.id === id)
+      await apiServes.patch(`/order/${id}`, { qty:  Number(item?.qty ?? 0) + 1});
+      const { data } = await apiServes.get("/order");
+      const result = mapResponseApiData(data ?? {});
       this.setState({
-        data: this.state.data.map((item) => {
-          if (id == item.id) {
-            return {
-              ...item,
-              qty: Number(item.qty) + 1,
-              price: Number(item.price) + Number(item.price),
-            };
-          } else {
-            return item;
-          }
-        }),
-        totalPrice: this.getPrice(this.state.data),
+        ...this.state,
+        data: result,
+        totalPrice: this.getTotalPrice(result),
       });
     }
   };
-
-  decreaseItem = ({ target }) => {
+  decreaseItem = async ({ target }) => {
     if (target.closest(".minus")) {
       let id = target.parentElement.parentElement.dataset.id;
+      const item = this.state.data.find((item) => item.id === id)
+      await apiServes.patch(`/order/${id}`, { qty:  Number(item?.qty ?? 0) - 1});
+      const { data } = await apiServes.get("/order");
+      const result = mapResponseApiData(data ?? {});
       this.setState({
-        data: apiServes.post(
-          "/order",
-          this.state.data.map((item) => {
-            if (id == item.id) {
-              return {
-                ...item,
-                qty: Number(item.qty) - 1,
-                price: Number(item.price) - Number(item.price),
-              };
-            } else {
-              return item;
-            }
-          })
-        ),
-        totalPrice: this.getPrice(this.state.data),
+        ...this.state,
+        data: result,
+        totalPrice: this.getTotalPrice(result),
       });
     }
   };
 
-  getPrice(arr) {
-    let totalPrice = 0;
-    arr.map((item) => {
-      totalPrice = Number(item.price) + totalPrice;
-    });
-    return totalPrice;
-  }
 
   async init() {
     try {
-      const { setUser } = useUserStore();
+      const { getUser } = useUserStore();
       const { data } = (await apiServes.get("/order")) ?? [];
-      console.log(mapResponseApiData(data));
+      const result = mapResponseApiData(data);
       this.setState({
-        user: setUser(),
-        data: mapResponseApiData(data),
+        ...this.state,
+        user: getUser(),
+        data: result,
+        totalPrice: this.getTotalPrice(result),
       });
     } catch ({ message }) {
-      useToastNotification({ message });
+      useToastNotification({ message: 'Корзина пуста' });
     }
   }
 
@@ -100,6 +86,13 @@ export class OrderForm extends Component {
     this.addEventListener("click", this.deleteItem);
     this.addEventListener("click", this.increaseItem);
     this.addEventListener("click", this.decreaseItem);
+  }
+
+  componentWillUnmount() {
+    this.init();
+    this.removeEventListener("click", this.deleteItem);
+    this.removeEventListener("click", this.increaseItem);
+    this.removeEventListener("click", this.decreaseItem);
   }
 }
 

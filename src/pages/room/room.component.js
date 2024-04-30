@@ -18,6 +18,7 @@ export class Room extends Component {
       isLoading: false,
       user: null,
       cart: [],
+      totalPrice: 0,
     };
   }
 
@@ -70,38 +71,37 @@ export class Room extends Component {
     if (target.closest(".clear")) {
       const body = document.querySelector(".order-body");
       let id = target.parentElement.parentElement.dataset.id;
+      const { getUser } = useUserStore()
       apiServes.delete("/order", id).then(() => {
         apiServes.get("/order", id).then(({ data }) => {
           this.setState({
             ...this.state,
             cart: data,
+            user: getUser(),
+            totalPrice: this.getTotalPrice(data),
           });
         });
       });
       body.innerHTML = "";
     }
   };
+
+
   async init() {
     try {
+      const { getUser } = useUserStore();
       const { data } = await apiServes.get("/order");
       this.setState({
         ...this.state,
         cart: mapResponseApiData(data),
+        user: getUser(),
       });
     } catch ({ message }) {
       useToastNotification({ message });
     }
   }
-  initUser() {
-    const { getUser } = useUserStore();
-    this.setState({
-      ...this.state,
-      user: getUser(),
-    });
-  }
   componentDidMount() {
     this.init();
-    this.initUser();
     this.addEventListener("click", this.onClick);
   }
 
