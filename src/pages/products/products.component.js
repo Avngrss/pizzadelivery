@@ -163,7 +163,7 @@ export class Products extends Component {
   };
 
   componentDidMount() {
-    // this.timerID = setTimeout(this.openSuggestModal, 3000);
+    this.timerID = setTimeout(this.openSuggestModal, 3000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();
