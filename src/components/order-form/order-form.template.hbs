@@ -33,32 +33,26 @@
       class="p-1 h-14 w-full border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
     />
   </label>
-  <div>
-    <label class="w-full">
-      <p class="text-lg text-red-500">Способ оплаты курьеру?</p>
-      <div class="flex justify-between items-center">
-        <div>
-          <label class="text-red-500" for="">
-            Наличные
-          </label>
-          <input
-            type="radio"
-            name="cash"
-            class="p-1 border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-          />
-        </div>
-        <div>
-          <label class="text-red-500" for="">
-            Картой
-          </label>
-          <input
-            type="radio"
-            name="card"
-            class="p-1 border rounded border-1 border-yellow-300 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-300"
-          />
-        </div>
-      </div>
-    </label>
+    <div class="flex justify-between items-center">
+      <div>
+        <fieldset>
+          <legend class="text-orange-400">Способ оплаты курьеру:</legend>
+          <div>
+            <input type="radio" id="cash" name="pay" value="Наличные" checked />
+            <label for="cash">Наличные</label>
+          </div>
+          <div>
+            <input type="radio" id="card" name="pay" value="Картой" />
+            <label for="card">Картой</label>
+          </div>
+        </fieldset>
+    </div>
   </div>
-
+  <div>
+    <h2 class="text-orange-400">Ваш заказ</h2>
+    {{#each data}}
+      <p>{{this.title}} <span class="text-orange-300">{{this.qty}} шт.</span></p>
+    {{/each}}
+    <p>На сумму: {{totalPrice}} ₽</p>
+  </div>
 </form>

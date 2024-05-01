@@ -20,11 +20,12 @@ export class Footer extends Component {
       isOpen: true,
       showBtn: true,
       template: "ui-call-form",
-      successCaption: "Отправить",
+      successBtn: true,
+      successCaption: "Заказать звонок",
       rejectCaption: "Отменить",
       title: "Заказать звонок",
       onSuccess: (modal) => {
-        const form = modal.querySelector(".call-form ");
+        const form = modal.querySelector(".call-form");
         const formData = extractFormData(form);
         console.log(formData);
         useToastNotification({

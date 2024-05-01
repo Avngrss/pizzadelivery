@@ -7,8 +7,7 @@ import { useToastNotification } from "../../hooks/useToastNotification";
 import { TOAST_TYPE } from "../../constants/toast";
 import { useNavigate } from "../../hooks/useNavigate";
 import { useUserStore } from "../../hooks/useStoreUser";
-import { validateIsNotEmptyFields } from "../../utils/validateIsNotEmptyFields";
-import { validatePasswordLength } from "../../utils/validatePasswordLength";
+import { apiServes } from '../../services/Api'
 
 export class SignUp extends Component {
   constructor() {
@@ -49,6 +48,7 @@ export class SignUp extends Component {
       .then(() => {
         authService.updateUserProfile(rest).then(() => {
           setUser({ ...authService.getCurrentUser() });
+          apiServes.post('/users', authService.getCurrentUser())
           useToastNotification({
             message: "Успешная регистрация",
             type: TOAST_TYPE.success,
@@ -58,7 +58,7 @@ export class SignUp extends Component {
       })
       .catch(() => {
         useToastNotification({
-          message: "Неправильный логин или пароль",
+          message: "Пожалуйста,заполните все поля",
           type: TOAST_TYPE.error,
         });
       })

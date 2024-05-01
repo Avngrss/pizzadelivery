@@ -8,7 +8,6 @@ import { useNavigate } from "../../hooks/useNavigate";
 import { useModal } from "../../hooks/useModal";
 import { extractFormData } from "../../utils/extractFormData";
 import { TOAST_TYPE } from "../../constants/toast";
-import { bot } from "../bot/bot";
 import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 
@@ -27,16 +26,6 @@ export class Menu extends Component {
       isLoading: false,
       user: null,
       orderCart: [],
-      inputs: {
-        name: {
-          value: "",
-          error: "",
-        },
-        phone: {
-          value: "",
-          error: "",
-        },
-      },
     };
   }
 
@@ -80,7 +69,6 @@ export class Menu extends Component {
       onSuccess: (modal) => {
         const form = modal.querySelector(".call-form");
         const formData = extractFormData(form);
-        bot(form, formData);
         console.log(formData);
         useToastNotification({
           message: "Ваше сообщение получено. В скором времени с вами свяжутся",
@@ -95,9 +83,7 @@ export class Menu extends Component {
       template: "ui-cart-form",
       orderBtn: "Заказать",
       title: "Корзина",
-      onSuccess: (modal) => {
-        console.log(modal);
-      },
+      onSuccess: () => {},
     });
   }
 
@@ -107,13 +93,6 @@ export class Menu extends Component {
     }
     if (target.closest(".cart")) {
       this.openCartModal();
-    }
-  };
-
-  linkEmail = (e) => {
-    const target = e.target;
-    if (target.matches(".email")) {
-      e.preventDefault();
     }
   };
 
@@ -130,15 +109,17 @@ export class Menu extends Component {
       user: getUser(),
     });
   }
-
   async init() {
     try {
+      const { getUser } = useUserStore();
       const { data } = await apiServes.get("/order");
+      const result =  mapResponseApiData(data ?? {});
       this.setState({
-        orderCart: mapResponseApiData(data),
+        orderCart: result,
+        user: getUser(),
       });
-    } catch ({ message }) {
-      useToastNotification({ message });
+    } catch (error) {
+      console.log(error);
     }
   }
 

@@ -5,7 +5,6 @@ import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 import { useModal } from "../../hooks/useModal";
 import { useToastNotification } from "../../hooks/useToastNotification";
-import { useUserStore } from "../../hooks/useStoreUser";
 
 //Swiper-slider
 // import function to register Swiper custom elements
@@ -34,6 +33,12 @@ export class Products extends Component {
       totalPrice: 0,
     };
   }
+  toggleIsLoading = () => {
+    this.setState({
+      ...this.state,
+      isLoading: !this.state.isLoading,
+    });
+  };
   setTimer() {
     const target_mili_sec = new Date("May 10, 2024 14:30:0").getTime();
     const timer = () => {
@@ -64,12 +69,6 @@ export class Products extends Component {
       onSuccess() {},
     });
   }
-  toggleIsLoading = () => {
-    this.setState({
-      ...this.state,
-      isLoading: !this.state.isLoading,
-    });
-  };
   getProducts = () => {
     this.toggleIsLoading();
     apiServes
@@ -81,8 +80,6 @@ export class Products extends Component {
         });
       })
       .catch(() => {
-        const products = this.querySelector(".products");
-        products.innerHTML = "Сервер не доступен";
         useToastNotification({ message: "Сервер не доступен" });
       })
       .finally(() => {
@@ -151,19 +148,17 @@ export class Products extends Component {
       let img = e.target.parentElement.parentElement.dataset.img;
       let qty = e.target.parentElement.parentElement.dataset.qty;
       const cartItems = { id, price, title, img, qty };
-      const { getUser } = useUserStore();
       apiServes.post("/order", cartItems).then(() => {
         this.setState({
           ...this.state,
           orderCart: this.state.orderCart.concat(cartItems),
-          user: getUser()
         });
       })
     }
   };
 
   componentDidMount() {
-    this.timerID = setTimeout(this.openSuggestModal, 3000);
+    this.timerID = setTimeout(this.openSuggestModal, 30000);
     this.addEventListener("click", this.filterProducts);
     this.addEventListener("keyup", this.liveSearch);
     this.getProducts();

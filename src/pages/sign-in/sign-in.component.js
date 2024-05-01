@@ -9,6 +9,8 @@ import { useUserStore } from "../../hooks/useStoreUser";
 import { useToastNotification } from "../../hooks/useToastNotification";
 import { validateIsNotEmptyFields } from "../../utils/validateIsNotEmptyFields";
 import { validatePasswordLength } from "../../utils/validatePasswordLength";
+import { apiServes } from "../../services/Api";
+
 
 export class SignIn extends Component {
   constructor() {
@@ -88,35 +90,11 @@ export class SignIn extends Component {
 
     if (!this.state.isValidateError) this.signInUser(formData);
   };
-
-  // signInGoogle = (e) => {
-  //   e.preventDefault();
-  //   if (e.target.closest(".btn-google")) {
-  //     this.toggleIsLoading();
-  //     authService
-  //       .signInWitchGoogle()
-  //       .then(() => {
-  //         useToastNotification({
-  //           message: "Успешный вход",
-  //           type: TOAST_TYPE.success,
-  //         });
-  //         useNavigate(ROUTES.products);
-  //       })
-  //       .finally(() => {
-  //         this.toggleIsLoading();
-  //       });
-  //   }
-  // };
-
   componentDidMount() {
     this.addEventListener("submit", this.onSubmit);
-    // this.addEventListener("click", this.signInGoogle);
-    // this.addEventListener("change", this.validateField);
   }
   componentWillUnmount() {
     this.removeEventListener("submit", this.onSubmit);
-    // this.removeEventListener("click", this.signInGoogle);
-    // this.removeEventListener("change", this.validateField);
   }
 }
 

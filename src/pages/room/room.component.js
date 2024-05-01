@@ -2,7 +2,6 @@ import { Component } from "../../core/Component";
 import template from "./room.template.hbs";
 import { useModal } from "../../hooks/useModal";
 import { useToastNotification } from "../../hooks/useToastNotification";
-import { extractFormData } from "../../utils/extractFormData";
 import { TOAST_TYPE } from "../../constants/toast";
 import { useUserStore } from "../../hooks/useStoreUser";
 import { apiServes } from "../../services/Api";
@@ -21,7 +20,6 @@ export class Room extends Component {
       totalPrice: 0,
     };
   }
-
   toggleIsLoading = () => {
     this.setState({
       ...this.state,
@@ -35,69 +33,70 @@ export class Room extends Component {
       successCaption: "Заказать",
       successBtn: true,
       title: "Оформить заказ",
-      onSuccess: (modal) => {
+      onSuccess: () => {
+        const { getUser } = useUserStore()
         const body = document.querySelector(".order-body");
-        body.innerHTML = "";
-        const form = modal.querySelector(".order-form");
-        const formData = extractFormData(form);
-        console.log(formData);
         useToastNotification({
           message: "Ваше сообщение получено. В скором времени с вами свяжутся",
           type: TOAST_TYPE.success,
         });
-        body.innerHTML = "";
-        apiServes.delete("/order");
+        body.innerHTML = "Вы еще ничего не заказали";
+        
+        apiServes.delete("/order").then(({data}) => {
+         this.setState({
+          ...this.state,
+          cart: data,
+          user: getUser(),
+          totalPrice: 0,
+         })
+        }).catch((error) => {
+          console.log(error);
+        })
       },
     });
   }
-  deleteItem = ({ target }) => {
-    const cartBtnDelete = target.closest(".delete-btn");
-    if (cartBtnDelete) {
-      let id = target.parentElement.parentElement.dataset.id;
-      apiServes.delete("/order", id).then(() => {
-        apiServes.get("/order", id).then(({ data }) => {
-          this.setState({
-            ...this.state,
-            cart: data,
-          });
-        });
-      });
-    }
-  };
   onClick = ({ target }) => {
+    const { getUser } = useUserStore()
     if (target.closest(".order")) {
       this.openOrderModal();
     }
     if (target.closest(".clear")) {
+      this.toggleIsLoading()
       const body = document.querySelector(".order-body");
-      let id = target.parentElement.parentElement.dataset.id;
-      const { getUser } = useUserStore()
-      apiServes.delete("/order", id).then(() => {
-        apiServes.get("/order", id).then(({ data }) => {
+      apiServes.delete("/order").then(() => {
+        apiServes.get("/order").then(({ data }) => {
           this.setState({
             ...this.state,
             cart: data,
-            user: getUser(),
-            totalPrice: this.getTotalPrice(data),
+            totalPrice: 0,
+            user: getUser()
           });
-        });
+        }).finally(() => {
+          this.toggleIsLoading()
+        })
       });
-      body.innerHTML = "";
+      body.innerHTML = "Вы еще ничего не заказали";
     }
   };
-
-
-  async init() {
+  getTotalPrice(arr) {
+    return arr.reduce((prev, current) => (prev += Number(current.price) * current.qty), 0);
+  }
+   init = async() => {
+    this.toggleIsLoading()
     try {
       const { getUser } = useUserStore();
       const { data } = await apiServes.get("/order");
+      const result = mapResponseApiData(data);
       this.setState({
         ...this.state,
-        cart: mapResponseApiData(data),
         user: getUser(),
+        cart: result,
+        totalPrice: this.getTotalPrice(result),
       });
-    } catch ({ message }) {
-      useToastNotification({ message });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.toggleIsLoading()
     }
   }
   componentDidMount() {

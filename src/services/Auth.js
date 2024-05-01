@@ -4,8 +4,6 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
   updateProfile,
 } from "firebase/auth";
 import { firebaseService } from "./Firebase";
@@ -19,18 +17,6 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       onAuthStateChanged(this._auth, resolve, reject);
     });
-  }
-
-  async signInWitchGoogle() {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(this._auth, provider);
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const user = result.user;
-      console.log(user);
-    } catch (error) {
-      const credential = GoogleAuthProvider.credentialFromError(error);
-    }
   }
 
   getCurrentUser() {

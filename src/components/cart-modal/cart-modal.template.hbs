@@ -8,24 +8,28 @@
     </div>
   <div>
   </div>
-    {{#each data}}
-      <div class="flex flex-col items-center gap-3 relative mt-7" data-id="{{this.id}}">
-        <div class="font-bold" data-id="{{this.id}}">{{this.title}}</div>
-        <img class="w-20 h20" src="{{this.img}}" alt="" />
-        <strong>{{this.price}} ₽</strong>
-        <div class="flex items-center gap-5">
-          <span
-            class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer minus"
-          >-</span>
-          <strong class="qty">{{this.qty}}</strong>
-          <span
-            class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer plus"
-          >+</span>
+    {{#if data}}
+      {{#each data}}
+        <div class="flex flex-col items-center gap-3 relative mt-7" data-id="{{this.id}}">
+          <div class="font-bold" data-id="{{this.id}}">{{this.title}}</div>
+          <img class="w-20 h20" src="{{this.img}}" alt="" />
+          <strong>{{this.price}} ₽</strong>
+          <div class="flex items-center gap-5">
+            <span
+              class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer minus"
+            >-</span>
+            <strong class="qty">{{this.qty}}</strong>
+            <span
+              class="h-5 w-5 rounded-lg bg-slate-100 text-center cursor-pointer plus"
+            >+</span>
+          </div>
+          <div
+            class="absolute top-0 right-0 cursor-pointer bg-orange-200 p-1 rounded-full"
+          ><span class="delete-btn">&times;</span></div>
         </div>
-        <div
-          class="absolute top-0 right-0 cursor-pointer bg-orange-200 p-1 rounded-full"
-        ><span class="delete-btn">&times;</span></div>
-      </div>
-    {{/each}}
+      {{/each}}
+      {{else}}
+      <p class="mt-4 text-center">Корзина пуста. Добавьте что-нибудь</p>
+    {{/if}}
   </div>
 </div>

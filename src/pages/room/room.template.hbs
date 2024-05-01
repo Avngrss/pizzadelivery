@@ -6,23 +6,29 @@
   <main class="mt-4 animate-fade-left animate-duration-1000">
     <div class="flex gap-10">
       <div
-        class="flex items-center flex-col rounded-lg border border-gray-400 p-2 w-60"
+        class="flex items-center flex-col rounded-lg border border-gray-400 p-4 w-80"
       >
         <h1 class="uppercase font-semibold text-center">Текущий профиль</h1>
         <div class="flex flex-col items-center">
+           <div class="text-yellow-700">Почта пользователя</div>
           <a
             href="{{user.email}}"
-            class="text-lg font-light mt-2 email text-gray-400"
+            class="text-lg font-light email text-gray-400"
           >{{user.email}}</a>
+          <div class="text-yellow-700">ID пользователя</div>
+          <div class="font-light text-sm">{{user.uid}}</div>
+          <div class="text-yellow-700">Добро пожаловать</div>
           <span>{{user.displayName}}</span>
         </div>
       </div>
       <div class="p-2">
-        <h2 class="uppercase font-semibold mb-3">Ваш заказ</h2>
-        <div class="order-body mb-4 grid grid-cols-4">
-          {{#each cart}}
+        <h2 class="uppercase font-semibold text-orange-500 mb-1">Ваш заказ </h2>
+        <p>Сумма: {{totalPrice}} ₽</p>
+        <div class="order-body mb-4 grid grid-cols-4 gap-2">
+          {{#if cart}}
+            {{#each cart}}
             <div
-              class="flex items-center gap-5 relative mt-3"
+              class="flex items-center gap-5 relative mt-3 border border-sky-400 p-1 rounded-lg"
               data-id="{{this.id}}"
             >
               <div><img
@@ -32,7 +38,7 @@
                 /></div>
               <div class="flex flex-col justify-center items-center gap-3">
                 <div
-                  class="font-bold"
+                  class="font-bold text-center"
                   data-id="{{this.id}}"
                 >{{this.title}}</div>
                 <strong>{{this.price}} ₽</strong>
@@ -42,6 +48,9 @@
               </div>
             </div>
           {{/each}}
+          {{else}}
+          <p>Вы еще ничего не заказали</p>
+          {{/if}}
         </div>
         <div>
           <ui-button
@@ -50,7 +59,7 @@
             class-name="text-white"
           ></ui-button>
           <ui-button
-            class="clear mr-3"
+            class="clear ml-3"
             caption="Очистить корзину"
             class-name="text-white"
           ></ui-button>

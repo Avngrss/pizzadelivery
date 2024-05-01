@@ -1,5 +1,4 @@
 import { Component } from "../../core/Component";
-import { useToastNotification } from "../../hooks/useToastNotification";
 import { apiServes } from "../../services/Api";
 import { mapResponseApiData } from "../../utils/api";
 import template from "./cart-modal.template.hbs";
@@ -63,12 +62,10 @@ export class OrderForm extends Component {
       });
     }
   };
-
-
   async init() {
     try {
       const { getUser } = useUserStore();
-      const { data } = (await apiServes.get("/order")) ?? [];
+      const { data } = (await apiServes.get("/order"));
       const result = mapResponseApiData(data);
       this.setState({
         ...this.state,
@@ -76,8 +73,8 @@ export class OrderForm extends Component {
         data: result,
         totalPrice: this.getTotalPrice(result),
       });
-    } catch ({ message }) {
-      useToastNotification({ message: 'Корзина пуста' });
+    } catch (error) {
+      console.log(error);
     }
   }
 
