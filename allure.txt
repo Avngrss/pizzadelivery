@@ -1,0 +1,11 @@
+npx playwright test
+npx allure generate ./allure-results --clean -o ./allure-report
+npx allure open ./allure-report
+
+
+import { allure } from 'allure-playwright';
+
+allure.feature('Registration');
+allure.label('severity', 'critical');
+allure.tag('smoke');
+allure.description('Registers a new user with a unique email and strong password. Verifies redirect to login page and saves credentials to file.');
