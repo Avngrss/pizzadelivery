@@ -13,6 +13,8 @@
     "firebase:deploy": "firebase deploy"
   },
   "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.27",
     "autoprefixer": "^10.4.19",
     "firebase-tools": "^13.7.5",
     "postcss": "^8.4.38",
