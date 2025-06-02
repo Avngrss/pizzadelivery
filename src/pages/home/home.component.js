@@ -14,10 +14,12 @@ export class HomePage extends Component {
         {
           label: "Войти",
           href: ROUTES.signIn,
+          id: "login-btn"
         },
         {
           label: "Регистрация",
           href: ROUTES.signUp,
+          id: "register-btn"
         },
       ],
     };
