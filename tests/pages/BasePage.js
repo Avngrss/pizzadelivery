@@ -1,5 +1,5 @@
 // pages/BasePage.js
-class BasePage {
+export class BasePage {
   constructor(page, path = '') {
     this.page = page;
     this.path = path;
@@ -10,7 +10,6 @@ class BasePage {
    * и ожидает загрузки DOM-дерева
    */
  async open(options = {}) {
-    // Playwright автоматически подставит baseURL из конфига
     await this.page.goto(this.path, {
       waitUntil: 'domcontentloaded',
       ...options
@@ -61,4 +60,3 @@ class BasePage {
   }
 }
 
-export default BasePage;
