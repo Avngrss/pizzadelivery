@@ -58,5 +58,13 @@ export class BasePage {
   async verifyElementText(locator, expectedText) {
     await expect(locator).toHaveText(expectedText);
   }
+
+  /**
+   * Проверяет видимость и текст ошибки
+   */
+  async verifyErrorInElement(errorLocator, expectedText) {
+    await expect(errorLocator).toBeVisible();
+    await expect(errorLocator).toContainText(expectedText);
+  }
 }
 
