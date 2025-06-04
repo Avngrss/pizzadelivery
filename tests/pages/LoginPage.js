@@ -5,6 +5,7 @@ export class LoginPage extends BasePage {
     this.emailField = page.locator(`[type="email"]`);
     this.passwordField = page.locator(`[type="password"]`);
     this.submitButton = page.getByRole('button', {name: 'Войти'})
+    this.errorMessage = page.locator('#error-message')
   }
 
   async verifyPageIsLoaded() {
@@ -13,13 +14,16 @@ export class LoginPage extends BasePage {
     await this.verifyTitle("Вход в аккаунт");
     await this.verifyElementVisible(this.emailField);
     await this.verifyElementVisible(this.passwordField);
-    await this.verifyElementText(this.submitButton)
+    await this.verifyElementVisible(this.submitButton)
   }
 
-  async login() {
-    await this.waitForPageLoad();
-    await this.emailField.fill('')
-    await this.passwordField.fill('')
-    await this.submitButton.click()
+  async login(email, password) {
+    await this.emailField.fill(email)
+    await this.passwordField.fill(password)
+    await this.clickElement(this.submitButton)
+  }
+
+  async verifyLoginError(expectedError) {
+    await this.verifyErrorInElement(this.errorMessage, expectedError);
   }
 }

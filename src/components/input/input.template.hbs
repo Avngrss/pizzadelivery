@@ -3,7 +3,7 @@
     <p class="${(props.required) ? '_required' : ''}">{{label}}</p>
   {{/if}}
   {{#if error}}
-    <p class="text-red-500">{{error}}</p>
+    <p class="text-red-500" id="error-message">{{error}}</p>
   {{/if}}
   <input
     label="{{label}}"
