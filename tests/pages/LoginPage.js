@@ -23,7 +23,7 @@ export class LoginPage extends BasePage {
     await this.clickElement(this.submitButton)
   }
 
-  async verifyLoginError(expectedError) {
-    await this.verifyErrorInElement(this.errorMessage, expectedError);
+  async verifyLoginError(expectedError, expectedCount = 2) {
+    await this.verifyMultipleErrors(this.errorMessage, expectedError, expectedCount);
   }
 }

@@ -62,9 +62,18 @@ export class BasePage {
   /**
    * Проверяет видимость и текст ошибки
    */
-  async verifyErrorInElement(errorLocator, expectedText) {
-    await expect(errorLocator).toBeVisible();
-    await expect(errorLocator).toContainText(expectedText);
+  // async verifyErrorInElement(errorLocator, expectedText) {
+  //   await expect(errorLocator).toBeVisible();
+  //   await expect(errorLocator).toContainText(expectedText);
+  // }
+
+  async verifyMultipleErrors(errorLocator, expectedText, expectedCount = 1) {
+    await expect(errorLocator).toHaveCount(expectedCount);
+    const errors = await errorLocator.all();
+    for (const error of errors) {
+      await expect(error).toBeVisible();
+      await expect(error).toHaveText(expectedText);
+    }
   }
 }
 
