@@ -1,4 +1,5 @@
 // pages/BasePage.js
+import { expect } from "@playwright/test"
 export class BasePage {
   constructor(page, path = '') {
     this.page = page;
